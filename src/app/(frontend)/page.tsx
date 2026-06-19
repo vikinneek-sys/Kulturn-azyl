@@ -42,7 +42,7 @@ export default async function HomePage() {
       <section className="hero">
         <div className="container hero-grid">
           <div>
-            <p className="eyebrow">nezávislý kulturní magazín</p>
+            <p className="eyebrow">závislý kulturní magazín</p>
             <h1>Kultura má hlad. My jí dáme hovno.</h1>
             <p>
               Hudba, malba, grafika, literatura, divadlo a performance. Místo pro texty,
