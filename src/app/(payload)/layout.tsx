@@ -1,17 +1,33 @@
-import React from 'react'
 import config from '@payload-config'
-import { RootLayout } from '@payloadcms/next/layouts'
+import '@payloadcms/next/css'
+import type { ServerFunctionClient } from 'payload'
+import { handleServerFunctions, RootLayout } from '@payloadcms/next/layouts'
+import React from 'react'
+
 import { importMap } from './admin/importMap.js'
 import './custom.scss'
 
 export const metadata = {
   title: 'Kulturní azyl CMS',
-  description: 'Redakční systém magazínu Kulturní azyl',
 }
 
-export default function Layout({ children }: { children: React.ReactNode }) {
+type Args = {
+  children: React.ReactNode
+}
+
+const serverFunction: ServerFunctionClient = async function (args) {
+  'use server'
+
+  return handleServerFunctions({
+    ...args,
+    config,
+    importMap,
+  })
+}
+
+export default function Layout({ children }: Args) {
   return (
-    <RootLayout config={config} importMap={importMap}>
+    <RootLayout config={config} importMap={importMap} serverFunction={serverFunction}>
       {children}
     </RootLayout>
   )
