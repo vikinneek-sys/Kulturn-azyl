@@ -28,13 +28,13 @@ const categories = [
 const richText = (text: string) => ({
   root: {
     type: 'root',
-    format: '',
+    format: '' as const,
     indent: 0,
     version: 1,
     children: [
       {
         type: 'paragraph',
-        format: '',
+        format: '' as const,
         indent: 0,
         version: 1,
         children: [
@@ -48,10 +48,10 @@ const richText = (text: string) => ({
             version: 1,
           },
         ],
-        direction: 'ltr',
+        direction: 'ltr' as const,
       },
     ],
-    direction: 'ltr',
+    direction: 'ltr' as const,
   },
 })
 
