@@ -194,6 +194,24 @@ main,
   padding: 0;
 }
 
+.hero-intro {
+  padding: 1.75rem 0 0;
+}
+
+.hero-intro .eyebrow {
+  margin: 0 0 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.2em;
+}
+
+.hero-intro h1 {
+  margin: 0;
+  font-size: clamp(2.3rem, 5vw, 5.5rem);
+  line-height: 0.95;
+  letter-spacing: -0.08em;
+  max-width: 14ch;
+}
+
 .hero-poster {
   position: relative;
   min-height: 40rem;

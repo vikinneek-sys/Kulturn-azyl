@@ -52,6 +52,11 @@ export default async function HomePage() {
             <span className="line line-small white">MAINSTREAMU</span>
           </div>
         </div>
+
+        <div className="hero-intro container">
+          <p className="eyebrow">Nezávislý kulturní magazín</p>
+          <h1>Hudba, obraz, slovo a život v pohybu.</h1>
+        </div>
       </section>
 
       <section className="section">
