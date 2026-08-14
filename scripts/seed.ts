@@ -108,14 +108,7 @@ async function main() {
     createdCategories.push(doc)
   }
 
-  const existingArticles = await payload.find({
-    collection: 'articles',
-    limit: 1,
-    overrideAccess: true,
-  })
-
-  if (existingArticles.totalDocs === 0) {
-    const sampleArticles = [
+  const sampleArticles = [
       {
         title: 'Kulturní azyl otevírá dveře',
         slug: 'kulturni-azyl-otevira-dvere',
@@ -151,6 +144,19 @@ async function main() {
     ]
 
     for (const art of sampleArticles) {
+      const exists = await payload.find({
+        collection: 'articles',
+        limit: 1,
+        where: {
+          slug: {
+            equals: art.slug,
+          },
+        },
+        overrideAccess: true,
+      })
+
+      if (exists.totalDocs > 0) continue
+
       await payload.create({
         collection: 'articles',
         overrideAccess: true,
@@ -169,7 +175,6 @@ async function main() {
         },
       })
     }
-  }
 
   console.log('Seed hotový.')
   console.log('Admin login: admin@kulturniazyl.cz')
