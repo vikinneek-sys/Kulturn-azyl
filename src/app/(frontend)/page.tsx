@@ -43,7 +43,7 @@ export default async function HomePage() {
         <div className="container hero-grid">
           <div>
             <p className="eyebrow">závislý kulturní magazín</p>
-            <h1>Kultura má hlad. My jí dáme hovno.</h1>
+            <h1>Kultura má hlad. Nedáme jí jíst!</h1>
             <p>
               Hudba, malba, grafika, literatura, divadlo a performance. Místo pro texty,
               recenze, rozhovory, reportáže a živé věci, které by jinak zapadly v šumu algoritmu.
@@ -92,9 +92,9 @@ export default async function HomePage() {
           <div className="section-title">
             <h2>Rubriky</h2>
           </div>
-          <div className="category-list">
+            <div className="category-list">
             {categories.map((category: any) => (
-              <Link key={category.id} className="category-tile" href={`/rubriky/${category.slug}`}>
+              <Link key={category.id} className="category-tile" data-slug={category.slug} href={`/rubriky/${category.slug}`}>
                 <strong>{category.title}</strong>
                 <p>{category.description || 'Články, rozhovory a reportáže z této části scény.'}</p>
                 <span>Otevřít rubriku →</span>

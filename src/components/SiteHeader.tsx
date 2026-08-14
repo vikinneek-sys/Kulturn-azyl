@@ -27,11 +27,16 @@ export function SiteHeader() {
       </Link>
 
       <nav id="main-navigation" className={`nav ${isMenuOpen ? 'nav-open' : ''}`} aria-label="Hlavní navigace">
-        {nav.map((item) => (
-          <Link key={item.href} href={item.href} onClick={closeMenu}>
-            {item.label}
-          </Link>
-        ))}
+        {nav.map((item) => {
+          const isRubrika = item.href.startsWith('/rubriky/')
+          const slug = isRubrika ? item.href.split('/').pop() : undefined
+
+          return (
+            <Link key={item.href} href={item.href} data-slug={slug} onClick={closeMenu}>
+              {item.label}
+            </Link>
+          )
+        })}
       </nav>
 
       <div className="header-actions">
