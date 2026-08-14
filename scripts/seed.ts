@@ -115,24 +115,60 @@ async function main() {
   })
 
   if (existingArticles.totalDocs === 0) {
-    await payload.create({
-      collection: 'articles',
-      overrideAccess: true,
-      data: {
+    const sampleArticles = [
+      {
         title: 'Kulturní azyl otevírá dveře',
         slug: 'kulturni-azyl-otevira-dvere',
         excerpt:
           'Nový prostor pro hudbu, obraz, literaturu a živou kulturu. Žádná sterilní vitrína, spíš sklep s dobrým světlem.',
-        category: createdCategories[0].id,
-        author: admin.id,
-        status: 'published',
+        categoryIndex: 0,
         featured: true,
-        publishedAt: new Date().toISOString(),
-        content: richText(
-          'Tohle je ukázkový článek. V administraci ho můžeš upravit, smazat, nebo použít jako test toho, že redakční systém funguje. Redaktor píše, editor schvaluje, kultura přežívá.'
-        ),
       },
-    })
+      {
+        title: 'Hluk, co má důvod',
+        slug: 'hluk-co-ma-duvod',
+        excerpt: 'Reportáž z klubového večera, kde špinavé kytary potkaly poezii.',
+        categoryIndex: 0,
+      },
+      {
+        title: 'Barvy, co křičí',
+        slug: 'barvy-co-krici',
+        excerpt: 'Přehled současné grafiky a malby, která neomlouvá tóny.',
+        categoryIndex: 1,
+      },
+      {
+        title: 'Slova, která nespí',
+        slug: 'slova-ktera-nespi',
+        excerpt: 'Krátké eseje a ukázky z připravovaných sbírek.',
+        categoryIndex: 2,
+      },
+      {
+        title: 'Tělo v prostoru',
+        slug: 'telo-v-prostoru',
+        excerpt: 'Rozhovor s performerkou o hranicích mezi divadlem a životem.',
+        categoryIndex: 3,
+      },
+    ]
+
+    for (const art of sampleArticles) {
+      await payload.create({
+        collection: 'articles',
+        overrideAccess: true,
+        data: {
+          title: art.title,
+          slug: art.slug,
+          excerpt: art.excerpt,
+          category: createdCategories[art.categoryIndex].id,
+          author: admin.id,
+          status: 'published',
+          featured: !!art.featured,
+          publishedAt: new Date().toISOString(),
+          content: richText(
+            `Toto je ukázkový obsah článku "${art.title}". Slouží jako dummy obsah pro lokální vývoj.`
+          ),
+        },
+      })
+    }
   }
 
   console.log('Seed hotový.')
