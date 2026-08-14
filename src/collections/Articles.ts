@@ -11,9 +11,9 @@ export const Articles: CollectionConfig = {
     useAsTitle: 'title',
     defaultColumns: ['title', 'category', 'author', 'status', 'publishedAt'],
   },
-  versions: {
-    drafts: true,
-  },
+  // Redakční workflow řeší vlastní pole `status` (draft/review/published).
+  // Payload drafts by přidaly druhé pole `_status` a kolidující Postgres enum.
+  versions: true,
   access: {
     create: authenticated,
     read: ({ req: { user } }) => {

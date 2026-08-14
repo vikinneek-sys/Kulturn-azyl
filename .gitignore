@@ -6,3 +6,5 @@ payload.db-*
 dist
 .DS_Store
 .env.local
+.neon
+*.tsbuildinfo

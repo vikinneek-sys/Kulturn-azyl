@@ -6,18 +6,22 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "start": "next start",
+    "typecheck": "tsc --noEmit",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "generate:types": "npm run payload -- generate:types",
+    "generate:importmap": "npm run payload -- generate:importmap",
+    "seed": "tsx scripts/seed.ts",
     "ci": "cross-env PAYLOAD_MIGRATING=true payload migrate && next build"
   },
   "dependencies": {
-    "@payloadcms/db-postgres": "^3.86.0",
-    "@payloadcms/db-sqlite": "latest",
-    "@payloadcms/next": "latest",
-    "@payloadcms/richtext-lexical": "latest",
+    "@payloadcms/db-postgres": "3.86.0",
+    "@payloadcms/next": "3.86.0",
+    "@payloadcms/richtext-lexical": "3.86.0",
     "dotenv": "latest",
     "graphql": "latest",
     "next": "15.4.11",
-    "payload": "latest",
+    "payload": "3.86.0",
     "react": "latest",
     "react-dom": "latest",
     "sharp": "latest"
@@ -30,6 +34,6 @@
     "eslint": "latest",
     "eslint-config-next": "15.4.11",
     "tsx": "latest",
-    "typescript": "latest"
+    "typescript": "5.8.3"
   }
 }
