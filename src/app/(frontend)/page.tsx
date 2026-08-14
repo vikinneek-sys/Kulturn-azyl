@@ -40,22 +40,23 @@ export default async function HomePage() {
   return (
     <>
       <section className="hero">
-        <div className="hero-poster">
-          <div className="poster-text poster-left" aria-label="Kulturní azyl">
-            <span className="line line-top">KULTURNÍ</span>
-            <span className="line line-bottom">AZYL</span>
+        <div className="container hero-grid">
+          <div>
+            <p className="eyebrow">závislý kulturní magazín</p>
+            <h1>Kultura má hlad. Nedáme jí jíst!</h1>
+            <p>
+              Hudba, malba, grafika, literatura, divadlo a performance. Místo pro texty,
+              recenze, rozhovory, reportáže a živé věci, které by jinak zapadly v šumu algoritmu.
+            </p>
           </div>
-
-          <div className="poster-text poster-right" aria-label="Safeplace mimo spáry mainstreamu">
-            <span className="line line-top neon">SAFEPLACE</span>
-            <span className="line line-mid neon">NÍCO SPÁRY</span>
-            <span className="line line-small white">MAINSTREAMU</span>
+          <div className="hero-card">
+            <p className="eyebrow">redakční systém</p>
+            <h2>Redaktor píše. Editor schvaluje. Web žije.</h2>
+            <p>
+              Administrace běží na <strong>/admin</strong>. Každý autor má vlastní účet a oprávnění.
+              Žádný společný login, žádný digitální punk bez pojistek.
+            </p>
           </div>
-        </div>
-
-        <div className="hero-intro container">
-          <p className="eyebrow">Nezávislý kulturní magazín</p>
-          <h1>Hudba, obraz, slovo a život v pohybu.</h1>
         </div>
       </section>
 
