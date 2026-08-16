@@ -43,7 +43,7 @@ export default async function HomePage() {
         <div className="container hero-grid">
           <div>
             <p className="eyebrow">závislý kulturní magazín</p>
-            <h1>Kultura má hlad. Nedáme jí jíst!</h1>
+            <h1>Kultura má hlad. Dame jí hovno!</h1>
             <p>
               Hudba, malba, grafika, literatura, divadlo a performance. Místo pro texty,
               recenze, rozhovory, reportáže a živé věci, které by jinak zapadly v šumu algoritmu.
