@@ -1,5 +1,5 @@
 import type { CollectionConfig } from 'payload'
-import { adminsAndEditors, adminsEditorsOrAuthor, authenticated, anyone, isAdminOrEditorUser } from '@/access'
+import { adminsAndEditors, adminsEditorsOrAuthor, authenticated, anyone, isAdminOrEditorUser, isRedaktor } from '@/access'
 
 export const Articles: CollectionConfig = {
   slug: 'articles',
@@ -33,12 +33,14 @@ export const Articles: CollectionConfig = {
       ({ data, req, operation }) => {
         const user = req.user as any
 
-        if (operation === 'create' && user && !isAdminOrEditorUser(user)) {
-          data.author = user.id
-        }
+        if (user && !isAdminOrEditorUser(user)) {
+          if (operation === 'create' && !data.author) {
+            data.author = user.id
+          }
 
-        if (operation === 'create' && user && !data.author) {
-          data.author = user.id
+          if (data.author && data.author !== user.id) {
+            data.author = user.id
+          }
         }
 
         // Automaticky generuj slug z titulku
@@ -111,14 +113,15 @@ export const Articles: CollectionConfig = {
         position: 'sidebar',
       },
       access: {
-        update: ({ req, data, siblingData }) => {
+        create: ({ req }) => {
           const user = req.user as any
-          const isRedaktor = user?.role === 'redaktor'
-          // Redaktor může změnit jen na sebe, editor/admin na kohokoli
-          if (isRedaktor) {
-            return data === user.id || siblingData?.author === user.id
-          }
+          if (!user || !isRedaktor(user)) return true
           return true
+        },
+        update: ({ req, data }) => {
+          const user = req.user as any
+          if (!user || !isRedaktor(user)) return true
+          return data === user.id
         },
       },
     },
@@ -136,6 +139,20 @@ export const Articles: CollectionConfig = {
       admin: {
         position: 'sidebar',
         description: 'Redaktor: Koncept → Ke schválení. Editor/Admin: Publikuje. (Redaktořský pokus o publikaci se automaticky změní na Ke schválení)',
+      },
+      validate: (value, { user }) => {
+        if (isRedaktor(user as any) && value === 'published') {
+          return 'Redaktor nemůže publikovat článek. Zvolte „Ke schválení“.'
+        }
+        return true
+      },
+      access: {
+        create: () => true,
+        update: ({ req, data }) => {
+          const user = req.user as any
+          if (!user || !isRedaktor(user)) return true
+          return data !== 'published'
+        },
       },
     },
     {
