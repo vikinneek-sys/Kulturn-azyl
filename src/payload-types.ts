@@ -215,10 +215,6 @@ export interface Category {
 export interface Article {
   id: number;
   title: string;
-  /**
-   * Bez diakritiky, malá písmena, pomlčky. Např. rozhovor-s-kapelou.
-   */
-  slug: string;
   excerpt: string;
   heroImage?: (number | null) | Media;
   category: number | Category;
@@ -231,25 +227,54 @@ export interface Article {
   publishedAt?: string | null;
   tags?:
     | {
-        tag?: string | null;
+        tag?: ('rock' | 'pop' | 'metal' | 'folk' | 'jazz' | 'blues' | 'rap' | 'hiphop' | 'reggae') | null;
         id?: string | null;
       }[]
     | null;
-  content: {
-    root: {
-      type: string;
-      children: {
-        type: any;
-        version: number;
-        [k: string]: unknown;
-      }[];
-      direction: ('ltr' | 'rtl') | null;
-      format: 'left' | 'start' | 'center' | 'right' | 'end' | 'justify' | '';
-      indent: number;
-      version: number;
-    };
-    [k: string]: unknown;
-  };
+  content: (
+    | {
+        text: string;
+        level?: ('h2' | 'h3') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'heading';
+      }
+    | {
+        text: string;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'paragraph';
+      }
+    | {
+        image: number | Media;
+        caption?: string | null;
+        width?: ('full' | 'normal' | 'small') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'image';
+      }
+    | {
+        image: number | Media;
+        text: string;
+        imagePosition?: ('left' | 'right') | null;
+        imageWidth?: ('small' | 'medium' | 'large') | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'textWithImage';
+      }
+    | {
+        images: {
+          image: number | Media;
+          caption?: string | null;
+          id?: string | null;
+        }[];
+        autoplay?: boolean | null;
+        autoplaySpeed?: number | null;
+        id?: string | null;
+        blockName?: string | null;
+        blockType: 'gallery';
+      }
+  )[];
   updatedAt: string;
   createdAt: string;
 }
@@ -451,7 +476,6 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface ArticlesSelect<T extends boolean = true> {
   title?: T;
-  slug?: T;
   excerpt?: T;
   heroImage?: T;
   category?: T;
@@ -465,7 +489,59 @@ export interface ArticlesSelect<T extends boolean = true> {
         tag?: T;
         id?: T;
       };
-  content?: T;
+  content?:
+    | T
+    | {
+        heading?:
+          | T
+          | {
+              text?: T;
+              level?: T;
+              id?: T;
+              blockName?: T;
+            };
+        paragraph?:
+          | T
+          | {
+              text?: T;
+              id?: T;
+              blockName?: T;
+            };
+        image?:
+          | T
+          | {
+              image?: T;
+              caption?: T;
+              width?: T;
+              id?: T;
+              blockName?: T;
+            };
+        textWithImage?:
+          | T
+          | {
+              image?: T;
+              text?: T;
+              imagePosition?: T;
+              imageWidth?: T;
+              id?: T;
+              blockName?: T;
+            };
+        gallery?:
+          | T
+          | {
+              images?:
+                | T
+                | {
+                    image?: T;
+                    caption?: T;
+                    id?: T;
+                  };
+              autoplay?: T;
+              autoplaySpeed?: T;
+              id?: T;
+              blockName?: T;
+            };
+      };
   updatedAt?: T;
   createdAt?: T;
 }
