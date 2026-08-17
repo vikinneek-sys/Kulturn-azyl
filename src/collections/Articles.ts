@@ -128,24 +128,23 @@ export const Articles: CollectionConfig = {
       label: 'Stav článku',
       required: true,
       defaultValue: 'draft',
-      options: ({ user }) => {
-        const isRedaktor = user?.role === 'redaktor'
-        const baseOptions = [
-          { label: 'Koncept', value: 'draft' },
-          { label: 'Ke schválení', value: 'review' },
-        ]
-        // Redaktor vidí jen draft a review, editor/admin vidí všechny
-        if (isRedaktor) {
-          return baseOptions
-        }
-        return [
-          ...baseOptions,
-          { label: 'Publikováno', value: 'published' },
-        ]
-      },
+      options: [
+        { label: 'Koncept', value: 'draft' },
+        { label: 'Ke schválení', value: 'review' },
+        { label: 'Publikováno', value: 'published' },
+      ],
       admin: {
         position: 'sidebar',
         description: 'Redaktor: Koncept → Ke schválení. Editor/Admin: Publikuje.',
+      },
+      validate: ({ value, user: reqUser }) => {
+        const user = reqUser as any
+        const isRedaktor = user?.role === 'redaktor'
+        // Redaktor nemůže nastavit status na 'published'
+        if (isRedaktor && value === 'published') {
+          return 'Redaktoři nemohou publikovat články. Zvolte „Ke schválení".'
+        }
+        return true
       },
     },
     {
