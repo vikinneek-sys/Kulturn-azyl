@@ -140,20 +140,6 @@ export const Articles: CollectionConfig = {
         position: 'sidebar',
         description: 'Redaktor: Koncept → Ke schválení. Editor/Admin: Publikuje. (Redaktořský pokus o publikaci se automaticky změní na Ke schválení)',
       },
-      validate: (value, { user }) => {
-        if (isRedaktor(user as any) && value === 'published') {
-          return 'Redaktor nemůže publikovat článek. Zvolte „Ke schválení“.'
-        }
-        return true
-      },
-      access: {
-        create: () => true,
-        update: ({ req, data }) => {
-          const user = req.user as any
-          if (!user || !isRedaktor(user)) return true
-          return data !== 'published'
-        },
-      },
     },
     {
       name: 'featured',
