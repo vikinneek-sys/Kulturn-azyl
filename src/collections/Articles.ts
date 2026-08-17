@@ -135,16 +135,7 @@ export const Articles: CollectionConfig = {
       ],
       admin: {
         position: 'sidebar',
-        description: 'Redaktor: Koncept → Ke schválení. Editor/Admin: Publikuje.',
-      },
-      validate: ({ value, user: reqUser }) => {
-        const user = reqUser as any
-        const isRedaktor = user?.role === 'redaktor'
-        // Redaktor nemůže nastavit status na 'published'
-        if (isRedaktor && value === 'published') {
-          return 'Redaktoři nemohou publikovat články. Zvolte „Ke schválení".'
-        }
-        return true
+        description: 'Redaktor: Koncept → Ke schválení. Editor/Admin: Publikuje. (Redaktořský pokus o publikaci se automaticky změní na Ke schválení)',
       },
     },
     {
