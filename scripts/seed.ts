@@ -150,26 +150,30 @@ async function main() {
       },
     ]
 
-    for (const art of sampleArticles) {
-      const exists = await payload.find({
+    // Smaž všechny články aby se vynulovala data
+    try {
+      const allArticles = await payload.find({
         collection: 'articles',
-        limit: 1,
-        where: {
-          slug: {
-            equals: art.slug,
-          },
-        },
+        limit: 1000,
         overrideAccess: true,
       })
+      for (const art of allArticles.docs) {
+        await payload.delete({
+          collection: 'articles',
+          id: art.id,
+          overrideAccess: true,
+        })
+      }
+    } catch (e) {
+      // ignore
+    }
 
-      if (exists.totalDocs > 0) continue
-
+    for (const art of sampleArticles) {
       await payload.create({
         collection: 'articles',
         overrideAccess: true,
         data: {
           title: art.title,
-          slug: art.slug,
           excerpt: art.excerpt,
           category: createdCategories[art.categoryIndex].id,
           author: admin.id,
