@@ -144,13 +144,15 @@ export const Articles: CollectionConfig = {
     {
       name: 'featured',
       type: 'checkbox',
-      label: 'Zvýraznit na úvodu',
+      label: 'Doporučený',
       defaultValue: false,
       admin: {
         position: 'sidebar',
+        description: 'Pouze administrátor může zařadit článek mezi doporučené.',
       },
       access: {
-        update: adminsAndEditors, // Jen admin/editor může měnit featured
+        create: ({ req: { user } }) => Boolean(user) && (user as any)?.role === 'admin',
+        update: ({ req: { user } }) => Boolean(user) && (user as any)?.role === 'admin',
       },
     },
     {

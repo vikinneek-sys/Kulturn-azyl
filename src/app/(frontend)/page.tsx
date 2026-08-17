@@ -55,7 +55,7 @@ export default async function HomePage() {
       <section className="section">
         <div className="container">
           <div className="section-title">
-            <h2>Hlavní článek</h2>
+            <h2>Doporučený</h2>
             <Link href="/rubriky/hudba">Všechny rubriky →</Link>
           </div>
           {featured ? <ArticleCard article={featured} large /> : <div className="empty-state">Zatím nejsou publikované články. Přihlas se do CMS a něco tam pošli.</div>}
