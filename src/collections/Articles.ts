@@ -111,7 +111,15 @@ export const Articles: CollectionConfig = {
         position: 'sidebar',
       },
       access: {
-        update: adminsAndEditors,
+        update: ({ req, data, siblingData }) => {
+          const user = req.user as any
+          const isRedaktor = user?.role === 'redaktor'
+          // Redaktor může změnit jen na sebe, editor/admin na kohokoli
+          if (isRedaktor) {
+            return data === user.id || siblingData?.author === user.id
+          }
+          return true
+        },
       },
     },
     {
@@ -120,14 +128,24 @@ export const Articles: CollectionConfig = {
       label: 'Stav článku',
       required: true,
       defaultValue: 'draft',
-      options: [
-        { label: 'Koncept', value: 'draft' },
-        { label: 'Ke schválení', value: 'review' },
-        { label: 'Publikováno', value: 'published' },
-      ],
+      options: ({ user }) => {
+        const isRedaktor = user?.role === 'redaktor'
+        const baseOptions = [
+          { label: 'Koncept', value: 'draft' },
+          { label: 'Ke schválení', value: 'review' },
+        ]
+        // Redaktor vidí jen draft a review, editor/admin vidí všechny
+        if (isRedaktor) {
+          return baseOptions
+        }
+        return [
+          ...baseOptions,
+          { label: 'Publikováno', value: 'published' },
+        ]
+      },
       admin: {
         position: 'sidebar',
-        description: 'Redaktor může poslat ke schválení. Publikuje editor/admin.',
+        description: 'Redaktor: Koncept → Ke schválení. Editor/Admin: Publikuje.',
       },
     },
     {
@@ -137,6 +155,9 @@ export const Articles: CollectionConfig = {
       defaultValue: false,
       admin: {
         position: 'sidebar',
+      },
+      access: {
+        update: adminsAndEditors, // Jen admin/editor může měnit featured
       },
     },
     {
