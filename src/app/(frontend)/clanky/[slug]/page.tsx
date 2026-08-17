@@ -1,5 +1,5 @@
 import { notFound } from 'next/navigation'
-import { RichText } from '@/lib/richText'
+import { BlockRenderer } from '@/lib/blockRenderer'
 import { formatDate } from '@/lib/formatDate'
 import { getPayloadClient } from '@/lib/payload'
 
@@ -53,7 +53,7 @@ export default async function ArticleDetailPage({ params }: Props) {
         // eslint-disable-next-line @next/next/no-img-element
         <img src={image.url} alt={image.alt || article.title} className="article-hero-image" />
       )}
-      <RichText content={article.content} />
+      <BlockRenderer blocks={article.content} />
     </article>
   )
 }
