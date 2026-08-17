@@ -11,6 +11,8 @@
   --accent-malba-grafika: #1bbf3a;
   --accent-literatura: #1b7be1;
   --accent-divadlo-performance: #8b1be1;
+  --font-display: 'Anton', sans-serif;
+  --font-body: 'Manrope', sans-serif;
   --max: 1180px;
 }
 
@@ -28,7 +30,7 @@ body {
     radial-gradient(circle at 20% 0%, rgba(225, 27, 27, 0.08), transparent 28rem),
     linear-gradient(180deg, #080808 0%, var(--bg) 55%);
   color: var(--text);
-  font-family: Arial, Helvetica, sans-serif;
+  font-family: var(--font-body);
 }
 
 a {
@@ -65,8 +67,10 @@ img {
   gap: 0.25rem;
   align-items: baseline;
   text-transform: uppercase;
-  letter-spacing: -0.04em;
+  letter-spacing: -0.08em;
   font-size: clamp(1.4rem, 4vw, 2rem);
+  font-family: var(--font-display);
+  line-height: 0.9;
 }
 
 .brand span {
@@ -192,8 +196,10 @@ img {
 h1,
 h2,
 h3 {
-  letter-spacing: -0.04em;
-  line-height: 1;
+  font-family: var(--font-display);
+  letter-spacing: -0.05em;
+  line-height: 0.9;
+  text-transform: uppercase;
 }
 
 h1 {
