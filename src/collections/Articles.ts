@@ -176,8 +176,8 @@ export const Articles: CollectionConfig = {
     {
       name: 'content',
       type: 'blocks',
-      label: 'Obsah články',
-      required: true,
+      label: 'Obsah článku',
+      required: false,
       blocks: [
         {
           slug: 'heading',
