@@ -144,12 +144,23 @@ export const Articles: CollectionConfig = {
     {
       name: 'tags',
       type: 'array',
-      label: 'Štítky',
+      label: 'Štítky / Žánry',
       fields: [
         {
           name: 'tag',
-          type: 'text',
-          label: 'Štítek',
+          type: 'select',
+          label: 'Žánr',
+          options: [
+            { label: 'Rock', value: 'rock' },
+            { label: 'Pop', value: 'pop' },
+            { label: 'Metal', value: 'metal' },
+            { label: 'Folk', value: 'folk' },
+            { label: 'Jazz', value: 'jazz' },
+            { label: 'Blues', value: 'blues' },
+            { label: 'Rap', value: 'rap' },
+            { label: 'Hip-hop', value: 'hiphop' },
+            { label: 'Reggae', value: 'reggae' },
+          ],
         },
       ],
     },
