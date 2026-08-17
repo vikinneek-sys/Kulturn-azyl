@@ -49,14 +49,6 @@ export default async function HomePage() {
               recenze, rozhovory, reportáže a živé věci, které by jinak zapadly v šumu algoritmu.
             </p>
           </div>
-          <div className="hero-card">
-            <p className="eyebrow">redakční systém</p>
-            <h2>Redaktor píše. Editor schvaluje. Web žije.</h2>
-            <p>
-              Administrace běží na <strong>/admin</strong>. Každý autor má vlastní účet a oprávnění.
-              Žádný společný login, žádný digitální punk bez pojistek.
-            </p>
-          </div>
         </div>
       </section>
 
