@@ -45,7 +45,7 @@ export default async function HomePage() {
             <p className="eyebrow">závislý kulturní magazín</p>
             <h1 className="hero-headline">
               <span>Úkryt před</span>
-              <span>mainstreamu</span>
+              <span>světem</span>
             </h1>
             <p>
               Hudba, malba, grafika, literatura, divadlo a performance. Místo pro texty,
