@@ -55,6 +55,13 @@ const richText = (text: string) => ({
   },
 })
 
+const blockContent = (text: string) => [
+  {
+    blockType: 'paragraph',
+    text,
+  },
+]
+
 async function main() {
   const payload = await getPayload({ config })
 
@@ -169,9 +176,9 @@ async function main() {
           status: 'published',
           featured: !!art.featured,
           publishedAt: new Date().toISOString(),
-          content: richText(
+          content: blockContent(
             `Toto je ukázkový obsah článku "${art.title}". Slouží jako dummy obsah pro lokální vývoj.`
-          ),
+          ) as any,
         },
       })
     }

@@ -166,9 +166,169 @@ export const Articles: CollectionConfig = {
     },
     {
       name: 'content',
-      type: 'richText',
-      label: 'Text článku',
+      type: 'blocks',
+      label: 'Obsah články',
       required: true,
+      blocks: [
+        {
+          slug: 'heading',
+          labels: {
+            singular: 'Podnadpis',
+            plural: 'Podnadpisy',
+          },
+          fields: [
+            {
+              name: 'text',
+              type: 'text',
+              label: 'Nadpis',
+              required: true,
+            },
+            {
+              name: 'level',
+              type: 'select',
+              label: 'Úroveň',
+              defaultValue: 'h2',
+              options: [
+                { label: 'Nadpis 2', value: 'h2' },
+                { label: 'Nadpis 3', value: 'h3' },
+              ],
+            },
+          ],
+        },
+        {
+          slug: 'paragraph',
+          labels: {
+            singular: 'Odstavec',
+            plural: 'Odstavce',
+          },
+          fields: [
+            {
+              name: 'text',
+              type: 'textarea',
+              label: 'Text',
+              required: true,
+            },
+          ],
+        },
+        {
+          slug: 'image',
+          labels: {
+            singular: 'Obrázek',
+            plural: 'Obrázky',
+          },
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Obrázek',
+              required: true,
+            },
+            {
+              name: 'caption',
+              type: 'text',
+              label: 'Popis',
+            },
+            {
+              name: 'width',
+              type: 'select',
+              label: 'Šírka',
+              defaultValue: 'full',
+              options: [
+                { label: 'Plná šírka', value: 'full' },
+                { label: 'Normální', value: 'normal' },
+                { label: 'Malá', value: 'small' },
+              ],
+            },
+          ],
+        },
+        {
+          slug: 'textWithImage',
+          labels: {
+            singular: 'Text s obrázkem',
+            plural: 'Texty s obrázky',
+          },
+          fields: [
+            {
+              name: 'image',
+              type: 'upload',
+              relationTo: 'media',
+              label: 'Obrázek',
+              required: true,
+            },
+            {
+              name: 'text',
+              type: 'textarea',
+              label: 'Text (bude obtékat obrázek)',
+              required: true,
+            },
+            {
+              name: 'imagePosition',
+              type: 'select',
+              label: 'Pozice obrázku',
+              defaultValue: 'left',
+              options: [
+                { label: 'Vlevo', value: 'left' },
+                { label: 'Vpravo', value: 'right' },
+              ],
+            },
+            {
+              name: 'imageWidth',
+              type: 'select',
+              label: 'Šírka obrázku',
+              defaultValue: 'medium',
+              options: [
+                { label: 'Malá (30%)', value: 'small' },
+                { label: 'Střední (40%)', value: 'medium' },
+                { label: 'Velká (50%)', value: 'large' },
+              ],
+            },
+          ],
+        },
+        {
+          slug: 'gallery',
+          labels: {
+            singular: 'Galerie fotografií',
+            plural: 'Galerie fotografií',
+          },
+          fields: [
+            {
+              name: 'images',
+              type: 'array',
+              label: 'Fotografie',
+              required: true,
+              minRows: 2,
+              fields: [
+                {
+                  name: 'image',
+                  type: 'upload',
+                  relationTo: 'media',
+                  label: 'Fotografie',
+                  required: true,
+                },
+                {
+                  name: 'caption',
+                  type: 'text',
+                  label: 'Popis fotografie',
+                },
+              ],
+            },
+            {
+              name: 'autoplay',
+              type: 'checkbox',
+              label: 'Automaticky se posouvat',
+              defaultValue: true,
+            },
+            {
+              name: 'autoplaySpeed',
+              type: 'number',
+              label: 'Rychlost (sekundy)',
+              defaultValue: 5,
+              condition: (data) => data?.autoplay === true,
+            },
+          ],
+        },
+      ],
     },
   ],
 }
