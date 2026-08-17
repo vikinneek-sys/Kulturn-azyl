@@ -324,7 +324,6 @@ export const Articles: CollectionConfig = {
               type: 'number',
               label: 'Rychlost (sekundy)',
               defaultValue: 5,
-              condition: (data) => data?.autoplay === true,
             },
           ],
         },
