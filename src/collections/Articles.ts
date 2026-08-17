@@ -41,6 +41,16 @@ export const Articles: CollectionConfig = {
           data.author = user.id
         }
 
+        // Automaticky generuj slug z titulku
+        if (data.title && !data.slug) {
+          data.slug = data.title
+            .toLowerCase()
+            .normalize('NFD')
+            .replace(/[\u0300-\u036f]/g, '') // odstran diakritiku
+            .replace(/[^a-z0-9]+/g, '-') // nahrad znaky pomlckou
+            .replace(/^-+|-+$/g, '') // odstran pocatecni a koncove pomilcky
+        }
+
         // Redaktor nesmi publikovat sam sebe. Kdyz se pokusi dat published,
         // system to prehodi na review. Editor/Admin teprve publikuje.
         if (user && !isAdminOrEditorUser(user) && data.status === 'published') {
@@ -61,16 +71,6 @@ export const Articles: CollectionConfig = {
       type: 'text',
       label: 'Titulek',
       required: true,
-    },
-    {
-      name: 'slug',
-      type: 'text',
-      label: 'URL slug',
-      required: true,
-      unique: true,
-      admin: {
-        description: 'Bez diakritiky, malá písmena, pomlčky. Např. rozhovor-s-kapelou.',
-      },
     },
     {
       name: 'excerpt',
