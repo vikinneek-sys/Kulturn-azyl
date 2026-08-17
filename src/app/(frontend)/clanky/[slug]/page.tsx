@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { BlockRenderer } from '@/lib/blockRenderer'
 import { formatDate } from '@/lib/formatDate'
@@ -42,12 +43,23 @@ export default async function ArticleDetailPage({ params }: Props) {
 
   return (
     <article className="article-detail">
-      <p className="eyebrow">{category?.title || 'Článek'}</p>
+      {category?.slug ? (
+        <Link href={`/rubriky/${category.slug}`} className="eyebrow">
+          {category.title || 'Článek'}
+        </Link>
+      ) : (
+        <p className="eyebrow">{category?.title || 'Článek'}</p>
+      )}
       <h1>{article.title}</h1>
       <p className="page-intro">{article.excerpt}</p>
       <div className="meta-line">
         {article.publishedAt && <span>{formatDate(article.publishedAt)}</span>}
-        {author?.name && <span>Autor: {author.name}</span>}
+        {author?.name && (
+          <span>
+            Autor:{' '}
+            <Link href={`/redakce/${author.id}`}>{author.name}</Link>
+          </span>
+        )}
       </div>
       {image?.url && (
         // eslint-disable-next-line @next/next/no-img-element

@@ -14,19 +14,34 @@ export function ArticleCard({ article, large = false }: Props) {
   return (
     <article className={large ? 'article-card article-card-large' : 'article-card'}>
       {image?.url && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={image.url} alt={image.alt || article.title} className="article-image" />
+        <Link href={`/clanky/${article.slug}`} aria-label={`Otevřít článek ${article.title}`}>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={image.url} alt={image.alt || article.title} className="article-image" />
+        </Link>
       )}
       <div className="article-body">
         <div className="meta-line">
-          {category?.title && <span>{category.title}</span>}
+          {category?.slug ? (
+            <Link href={`/rubriky/${category.slug}`}>{category.title}</Link>
+          ) : (
+            category?.title && <span>{category.title}</span>
+          )}
           {article.publishedAt && <span>{formatDate(article.publishedAt)}</span>}
         </div>
         <h2>
           <Link href={`/clanky/${article.slug}`}>{article.title}</Link>
         </h2>
-        {article.excerpt && <p>{article.excerpt}</p>}
-        {author?.name && <p className="byline">Autor: {author.name}</p>}
+        {article.excerpt && (
+          <Link href={`/clanky/${article.slug}`} className="article-excerpt-link">
+            <p>{article.excerpt}</p>
+          </Link>
+        )}
+        {author?.name && (
+          <p className="byline">
+            Autor:{' '}
+            <Link href={`/redakce/${author.id}`}>{author.name}</Link>
+          </p>
+        )}
       </div>
     </article>
   )
