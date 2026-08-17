@@ -4,7 +4,7 @@ import { getPayloadClient } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'
 
-function formatDate(value: string | Date | undefined) {
+function formatDate(value: string | Date | null | undefined) {
   if (!value) return 'Nedávno'
 
   return new Intl.DateTimeFormat('cs-CZ', {
@@ -67,7 +67,7 @@ export default async function HomePage() {
             <aside className="hero-card">
               <div className="hero-card__topline">
                 <span>Doporučený článek</span>
-                <time dateTime={featured.publishedAt}>{formatDate(featured.publishedAt)}</time>
+                <time dateTime={featured.publishedAt ?? undefined}>{formatDate(featured.publishedAt)}</time>
               </div>
 
               <Link href={`/clanky/${featured.slug}`} className="hero-card__title">
