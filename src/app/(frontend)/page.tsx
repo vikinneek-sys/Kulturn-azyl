@@ -46,6 +46,8 @@ export default async function HomePage() {
   const [articles, categories] = await Promise.all([getPublishedArticles(9), getCategories()])
   const featured = articles.find((article: any) => article.featured) || articles[0]
   const rest = featured ? articles.filter((article: any) => article.id !== featured.id).slice(0, 6) : []
+  const featuredCategoryTitle =
+    typeof featured?.category === 'object' && featured.category ? featured.category.title : 'Rubrika'
 
   return (
     <>
@@ -77,7 +79,7 @@ export default async function HomePage() {
               <p className="hero-card__excerpt">{featured.excerpt}</p>
 
               <div className="hero-card__footer">
-                <span>{featured.category?.title || 'Rubrika'}</span>
+                <span>{featuredCategoryTitle}</span>
                 <Link href={`/clanky/${featured.slug}`} className="hero-card__link">
                   Číst článek →
                 </Link>
