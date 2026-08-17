@@ -681,6 +681,35 @@ h1 {
     min-height: auto;
     height: 260px;
   }
+
+  /* Responsive block styles */
+  .block-text-with-image {
+    display: block;
+  }
+
+  .block-text-with-image.image-left .float-image,
+  .block-text-with-image.image-right .float-image {
+    float: none;
+    width: 100% !important;
+    margin: 1rem 0 !important;
+  }
+
+  .block-heading {
+    font-size: 1.45rem;
+  }
+
+  .blocks-container {
+    font-size: 1rem;
+  }
+
+  .gallery-controls {
+    gap: 1rem;
+  }
+
+  .gallery-button {
+    padding: 0.5rem 0.7rem;
+    font-size: 1rem;
+  }
 }
 
 @media (max-width: 480px) {
