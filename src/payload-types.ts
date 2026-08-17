@@ -215,6 +215,7 @@ export interface Category {
 export interface Article {
   id: number;
   title: string;
+  slug?: string | null;
   excerpt: string;
   heroImage?: (number | null) | Media;
   category: number | Category;
@@ -476,6 +477,7 @@ export interface CategoriesSelect<T extends boolean = true> {
  */
 export interface ArticlesSelect<T extends boolean = true> {
   title?: T;
+  slug?: T;
   excerpt?: T;
   heroImage?: T;
   category?: T;

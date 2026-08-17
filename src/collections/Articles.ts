@@ -73,6 +73,15 @@ export const Articles: CollectionConfig = {
       required: true,
     },
     {
+      name: 'slug',
+      type: 'text',
+      label: 'URL slug',
+      unique: true,
+      admin: {
+        hidden: true, // Skryj od uživatelů, generuje se automaticky
+      },
+    },
+    {
       name: 'excerpt',
       type: 'textarea',
       label: 'Perex',
