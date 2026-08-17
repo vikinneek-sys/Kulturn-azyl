@@ -4,6 +4,16 @@ import { getPayloadClient } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'
 
+function formatDate(value: string | Date | undefined) {
+  if (!value) return 'Nedávno'
+
+  return new Intl.DateTimeFormat('cs-CZ', {
+    day: 'numeric',
+    month: 'numeric',
+    year: 'numeric',
+  }).format(new Date(value))
+}
+
 async function getPublishedArticles(limit = 9) {
   const payload = await getPayloadClient()
   const result = await payload.find({
@@ -52,16 +62,28 @@ export default async function HomePage() {
               recenze, rozhovory, reportáže a živé věci, které by jinak zapadly v šumu algoritmu.
             </p>
           </div>
-        </div>
-      </section>
 
-      <section className="section">
-        <div className="container">
-          <div className="section-title">
-            <h2>Doporučený článek</h2>
-            <Link href="/rubriky/hudba">Všechny rubriky →</Link>
-          </div>
-          {featured ? <ArticleCard article={featured} large /> : <div className="empty-state">Zatím nejsou publikované články. Přihlas se do CMS a něco tam pošli.</div>}
+          {featured ? (
+            <aside className="hero-card">
+              <div className="hero-card__topline">
+                <span>Doporučený článek</span>
+                <time dateTime={featured.publishedAt}>{formatDate(featured.publishedAt)}</time>
+              </div>
+
+              <Link href={`/clanky/${featured.slug}`} className="hero-card__title">
+                {featured.title}
+              </Link>
+
+              <p className="hero-card__excerpt">{featured.excerpt}</p>
+
+              <div className="hero-card__footer">
+                <span>{featured.category?.title || 'Rubrika'}</span>
+                <Link href={`/clanky/${featured.slug}`} className="hero-card__link">
+                  Číst článek →
+                </Link>
+              </div>
+            </aside>
+          ) : null}
         </div>
       </section>
 
