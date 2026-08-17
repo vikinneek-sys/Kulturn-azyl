@@ -53,6 +53,93 @@ type Block = HeadingBlock | ParagraphBlock | ImageBlock | TextWithImageBlock | G
 
 type BlocksContent = Block[]
 
+// Legacy richText format detection
+type Node = {
+  type?: string
+  text?: string
+  format?: number
+  tag?: string
+  children?: Node[]
+  listType?: string
+}
+
+type LexicalDoc = {
+  root?: {
+    children?: Node[]
+  }
+}
+
+function isLexicalContent(content: any): content is LexicalDoc {
+  return content && typeof content === 'object' && 'root' in content
+}
+
+function isBlocksContent(content: any): content is BlocksContent {
+  return Array.isArray(content) && content.length > 0 && 'blockType' in content[0]
+}
+
+// Legacy richText renderer
+function renderLexicalNode(node: Node, key: React.Key): React.ReactNode {
+  if (!node) return null
+
+  switch (node.type) {
+    case 'text': {
+      let content: React.ReactNode = node.text ?? ''
+      if (node.format && (node.format & 1) > 0) content = <strong>{content}</strong>
+      if (node.format && (node.format & 2) > 0) content = <em>{content}</em>
+      if (node.format && (node.format & 8) > 0) content = <u>{content}</u>
+      return <>{content}</>
+    }
+
+    case 'heading': {
+      const Tag = (node.tag || 'h2') as keyof React.JSX.IntrinsicElements
+      return (
+        <Tag key={key} className="block-heading">
+          {node.children?.map((child, idx) => renderLexicalNode(child, idx))}
+        </Tag>
+      )
+    }
+
+    case 'paragraph':
+      return (
+        <p key={key} className="block-paragraph">
+          {node.children?.map((child, idx) => renderLexicalNode(child, idx))}
+        </p>
+      )
+
+    case 'quote':
+      return (
+        <blockquote key={key}>
+          {node.children?.map((child, idx) => renderLexicalNode(child, idx))}
+        </blockquote>
+      )
+
+    case 'list': {
+      const Tag = node.listType === 'number' ? 'ol' : 'ul'
+      return (
+        <Tag key={key}>
+          {node.children?.map((child, idx) => renderLexicalNode(child, idx))}
+        </Tag>
+      )
+    }
+
+    case 'listitem':
+      return (
+        <li key={key}>
+          {node.children?.map((child, idx) => renderLexicalNode(child, idx))}
+        </li>
+      )
+
+    default:
+      return null
+  }
+}
+
+function renderLexicalDoc(doc: LexicalDoc) {
+  const nodes = doc?.root?.children ?? []
+  return <div className="blocks-container">{nodes.map((node, index) => renderLexicalNode(node, index))}</div>
+}
+
+// New blocks renderer
 function renderHeading(block: HeadingBlock, index: number) {
   const Tag = (block.level || 'h2') as keyof React.JSX.IntrinsicElements
   return (
@@ -170,7 +257,13 @@ function renderBlock(block: Block, index: number): React.ReactNode {
   }
 }
 
-export function BlockRenderer({ blocks }: { blocks: BlocksContent | null | undefined }) {
+export function BlockRenderer({ blocks }: { blocks: any }) {
+  // Handle legacy richText format (Lexical)
+  if (isLexicalContent(blocks)) {
+    return renderLexicalDoc(blocks)
+  }
+
+  // Handle new blocks format
   if (!blocks || !Array.isArray(blocks) || blocks.length === 0) {
     return <div className="blocks-container empty">Žádný obsah</div>
   }
