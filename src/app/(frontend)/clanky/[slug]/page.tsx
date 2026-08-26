@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
+import { AdSlot } from '@/components/AdSlot'
 import { BlockRenderer } from '@/lib/blockRenderer'
 import { formatDate } from '@/lib/formatDate'
 import { getPayloadClient } from '@/lib/payload'
@@ -65,6 +66,7 @@ export default async function ArticleDetailPage({ params }: Props) {
         // eslint-disable-next-line @next/next/no-img-element
         <img src={image.url} alt={image.alt || article.title} className="article-hero-image" />
       )}
+      <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE} />
       <BlockRenderer blocks={article.content} />
     </article>
   )

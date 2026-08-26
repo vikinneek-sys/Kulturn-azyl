@@ -1,3 +1,4 @@
+import path from 'path'
 import type { CollectionConfig } from 'payload'
 import { authenticated, anyone } from '@/access'
 
@@ -8,7 +9,8 @@ export const Media: CollectionConfig = {
     plural: 'Média',
   },
   upload: {
-    staticDir: 'media',
+    staticDir: path.resolve(process.cwd(), 'media'),
+    staticURL: '/media',
     mimeTypes: ['image/*'],
     imageSizes: [
       { name: 'thumbnail', width: 400, height: 300, position: 'centre' },

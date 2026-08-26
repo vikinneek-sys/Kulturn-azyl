@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { AdSlot } from '@/components/AdSlot'
 import { ArticleCard } from '@/components/ArticleCard'
 import { getPayloadClient } from '@/lib/payload'
 
@@ -105,6 +106,8 @@ export default async function HomePage() {
           )}
         </div>
       </section>
+
+      <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_HOME} />
 
       <section className="section">
         <div className="container">
