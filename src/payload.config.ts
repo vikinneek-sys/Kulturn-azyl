@@ -4,6 +4,7 @@ import sharp from 'sharp'
 import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
+import { s3Storage } from '@payloadcms/storage-s3'
 
 import { Articles } from './collections/Articles'
 import { Categories } from './collections/Categories'
@@ -43,6 +44,26 @@ export default buildConfig({
   },
 
   collections: [Users, Media, Categories, Articles, Pages],
+
+  plugins: process.env.S3_BUCKET
+    ? [
+        s3Storage({
+          collections: {
+            media: true,
+          },
+          bucket: process.env.S3_BUCKET,
+          config: {
+            credentials: {
+              accessKeyId: process.env.S3_ACCESS_KEY_ID!,
+              secretAccessKey: process.env.S3_SECRET_ACCESS_KEY!,
+            },
+            endpoint: process.env.S3_ENDPOINT,
+            region: process.env.S3_REGION || 'auto',
+            forcePathStyle: process.env.S3_FORCE_PATH_STYLE === 'true',
+          },
+        }),
+      ]
+    : [],
 
   editor: lexicalEditor(),
 
