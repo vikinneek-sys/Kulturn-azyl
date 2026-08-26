@@ -10,7 +10,6 @@ export const Media: CollectionConfig = {
   },
   upload: {
     staticDir: path.resolve(process.cwd(), 'media'),
-    staticURL: '/media',
     mimeTypes: ['image/*'],
     imageSizes: [
       { name: 'thumbnail', width: 400, height: 300, position: 'centre' },
