@@ -6,7 +6,7 @@ const categories = [
   {
     title: 'Hudba',
     slug: 'hudba',
-    description: 'Koncerty, rozhovory, recenze, scéna a hluk, který má důvod existovat.',
+    description: 'Koncerty, novinky i rozhovory. Poklady skryté v malých klubech, barech nebo teprve hledající své první malé velké pódia.',
   },
   {
     title: 'Malba / grafika',
