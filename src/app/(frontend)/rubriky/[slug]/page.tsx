@@ -33,7 +33,9 @@ export default async function CategoryPage({ params }: Props) {
         ? 'Máš volné místo na zdi? Chceš něco položit na noční stolek? Tady najdeš poctivé umělce ať už hledáš cool obrazy, postery nebo stylovější plastiky než zahradního trpaslíka z Unihobby.'
         : category.slug === 'literatura'
           ? 'Žádná maturita. Už stačilo Shakespera a Máchy. Přečti si něco od lidí, které znáš a chápeš, ať už chceš romány nebo verše.'
-          : category.description
+          : category.slug === 'divadlo-performance'
+            ? 'Člověk nemusí všechno zaznamenat. Něco se dá ukázat na prknech co znamenají svět. Co takhle prkna, která znamenají podsvětí?'
+            : category.description
 
   const articles = await payload.find({
     collection: 'articles',
