@@ -508,10 +508,21 @@ h3 {
 }
 
 .static-card {
+  display: block;
   background: var(--panel);
   border: 1px solid var(--line);
   border-radius: 1.5rem;
   padding: clamp(1.2rem, 4vw, 2rem);
+}
+
+.author-card {
+  transition: border-color 0.18s ease, transform 0.18s ease;
+}
+
+.author-card:hover,
+.author-card:focus-visible {
+  border-color: var(--accent);
+  transform: translateY(-3px);
 }
 
 .contact-box {

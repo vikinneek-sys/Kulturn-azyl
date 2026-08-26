@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'
@@ -28,7 +29,7 @@ export default async function RedakcePage() {
           {users.docs.map((user: any) => {
             const avatar = typeof user.avatar === 'object' ? user.avatar : null
             return (
-              <article className="static-card" key={user.id}>
+              <Link href={`/redakce/${user.id}`} className="static-card author-card" key={user.id}>
                 {avatar?.url && (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img src={avatar.url} alt={avatar.alt || user.name} className="article-image" />
@@ -36,7 +37,7 @@ export default async function RedakcePage() {
                 <h2>{user.name}</h2>
                 <p className="eyebrow">{user.role}</p>
                 {user.bio && <p>{user.bio}</p>}
-              </article>
+              </Link>
             )
           })}
         </div>
