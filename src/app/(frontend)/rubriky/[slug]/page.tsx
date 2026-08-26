@@ -25,10 +25,15 @@ export default async function CategoryPage({ params }: Props) {
   const category = categories.docs[0]
   if (!category) return notFound()
 
+  const categoryTitle = category.slug === 'malba-grafika' ? 'Výtvarné umění' : category.title
   const categoryDescription =
     category.slug === 'hudba'
       ? 'Koncerty, novinky i rozhovory. Poklady skryté v malých klubech, barech nebo teprve hledající své první malé velké pódia.'
-      : category.description
+      : category.slug === 'malba-grafika'
+        ? 'Máš volné místo na zdi? Chceš něco položit na noční stolek? Tady najdeš poctivé umělce ať už hledáš cool obrazy, postery nebo stylovější plastiky než zahradního trpaslíka z Unihobby.'
+        : category.slug === 'literatura'
+          ? 'Žádná maturita. Už stačilo Shakespera a Máchy. Přečti si něco od lidí, které znáš a chápeš, ať už chceš romány nebo verše.'
+          : category.description
 
   const articles = await payload.find({
     collection: 'articles',
@@ -56,7 +61,7 @@ export default async function CategoryPage({ params }: Props) {
       <section className="page-header">
         <div className="container">
           <p className="eyebrow">rubrika</p>
-          <h1>{category.title}</h1>
+          <h1>{categoryTitle}</h1>
           {categoryDescription && <p className="page-intro">{categoryDescription}</p>}
         </div>
       </section>
