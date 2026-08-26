@@ -6,7 +6,7 @@ import { useState } from 'react'
 const nav = [
   { href: '/', label: 'Úvod' },
   { href: '/rubriky/hudba', label: 'Hudba' },
-  { href: '/rubriky/malba-grafika', label: 'Malba / grafika' },
+  { href: '/rubriky/malba-grafika', label: 'Výtvarné umění' },
   { href: '/rubriky/literatura', label: 'Literatura' },
   { href: '/rubriky/divadlo-performance', label: 'Divadlo / performance' },
   { href: '/redakce', label: 'Redakce' },
