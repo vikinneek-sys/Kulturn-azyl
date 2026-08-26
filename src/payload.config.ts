@@ -5,6 +5,7 @@ import { buildConfig } from 'payload'
 import { postgresAdapter } from '@payloadcms/db-postgres'
 import { lexicalEditor } from '@payloadcms/richtext-lexical'
 import { s3Storage } from '@payloadcms/storage-s3'
+import { vercelBlobStorage } from '@payloadcms/storage-vercel-blob'
 
 import { Articles } from './collections/Articles'
 import { Categories } from './collections/Categories'
@@ -32,20 +33,17 @@ if (!process.env.PAYLOAD_SECRET) {
   throw new Error('Chybí proměnná PAYLOAD_SECRET.')
 }
 
-export default buildConfig({
-  admin: {
-    user: Users.slug,
-    importMap: {
-      baseDir: path.resolve(dirname),
-    },
-    meta: {
-      titleSuffix: ' | Kulturní azyl',
-    },
-  },
-
-  collections: [Users, Media, Categories, Articles, Pages],
-
-  plugins: process.env.S3_BUCKET
+const storagePlugins = process.env.BLOB_READ_WRITE_TOKEN
+  ? [
+      vercelBlobStorage({
+        collections: {
+          media: true,
+        },
+        token: process.env.BLOB_READ_WRITE_TOKEN,
+        clientUploads: true,
+      }),
+    ]
+  : process.env.S3_BUCKET
     ? [
         s3Storage({
           collections: {
@@ -63,7 +61,22 @@ export default buildConfig({
           },
         }),
       ]
-    : [],
+    : []
+
+export default buildConfig({
+  admin: {
+    user: Users.slug,
+    importMap: {
+      baseDir: path.resolve(dirname),
+    },
+    meta: {
+      titleSuffix: ' | Kulturní azyl',
+    },
+  },
+
+  collections: [Users, Media, Categories, Articles, Pages],
+
+  plugins: storagePlugins,
 
   editor: lexicalEditor(),
 
