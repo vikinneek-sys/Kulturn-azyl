@@ -25,6 +25,11 @@ export default async function CategoryPage({ params }: Props) {
   const category = categories.docs[0]
   if (!category) return notFound()
 
+  const categoryDescription =
+    category.slug === 'hudba'
+      ? 'Koncerty, novinky i rozhovory. Poklady skryté v malých klubech, barech nebo teprve hledající své první malé velké pódia.'
+      : category.description
+
   const articles = await payload.find({
     collection: 'articles',
     depth: 2,
@@ -52,7 +57,7 @@ export default async function CategoryPage({ params }: Props) {
         <div className="container">
           <p className="eyebrow">rubrika</p>
           <h1>{category.title}</h1>
-          {category.description && <p className="page-intro">{category.description}</p>}
+          {categoryDescription && <p className="page-intro">{categoryDescription}</p>}
         </div>
       </section>
 

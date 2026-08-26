@@ -104,13 +104,18 @@ async function main() {
       overrideAccess: true,
     })
 
-    const doc =
-      existing.docs[0] ||
-      (await payload.create({
-        collection: 'categories',
-        overrideAccess: true,
-        data: category,
-      }))
+    const doc = existing.docs[0]
+      ? await payload.update({
+          collection: 'categories',
+          id: existing.docs[0].id,
+          overrideAccess: true,
+          data: category,
+        })
+      : await payload.create({
+          collection: 'categories',
+          overrideAccess: true,
+          data: category,
+        })
 
     createdCategories.push(doc)
   }
