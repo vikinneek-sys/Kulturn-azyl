@@ -7,7 +7,7 @@ export function SiteFooter() {
         <Link href="/" className="site-footer__brand" aria-label="Kulturní azyl">
           <span>Kulturní</span> <strong>azyl</strong>
         </Link>
-        <p>Prostor pro hudbu, obraz, slovo a živou scénu.</p>
+        <p>Nezávislý magazín o undergroundové kultuře, umění a lidech mimo hlavní proud.</p>
       </div>
 
       <nav className="site-footer__nav" aria-label="Navigace v patičce">
