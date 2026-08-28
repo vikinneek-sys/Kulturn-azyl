@@ -55,7 +55,7 @@ export default async function HomePage() {
       <section className="hero">
         <div className="container hero-grid">
           <div>
-            <p className="eyebrow">závislý kulturní magazín</p>
+            <p className="eyebrow">nezávislý kulturní magazín</p>
             <h1 className="hero-headline">
               <span>Úkryt před</span>
               <span>světem mainstreamu</span>
