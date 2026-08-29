@@ -5,12 +5,12 @@
   --text: #f7f5f4;
   --muted: #bfb9b8;
   --line: #1f1515;
-  --accent: #e11b1b; /* bright red */
-  --accent-dark: #8b0000;
-  --accent-hudba: #e11b1b;
-  --accent-malba-grafika: #1bbf3a;
-  --accent-literatura: #1b7be1;
-  --accent-divadlo-performance: #8b1be1;
+  --accent: #d15a5a; /* warm terracotta red */
+  --accent-dark: #8b3e3e;
+  --accent-hudba: #d15a5a;
+  --accent-malba-grafika: #66c96f;
+  --accent-literatura: #5fa3d0;
+  --accent-divadlo-performance: #a85fc7;
   --font-display: 'Anton', sans-serif;
   --font-body: 'Manrope', sans-serif;
   --max: 1180px;
