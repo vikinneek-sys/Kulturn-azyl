@@ -11,7 +11,13 @@ async function getCategories() {
     limit: 50,
   })
 
-  return result.docs
+  // Sort by custom order: Hudba, Malba/grafika, Literatura, Divadlo/performance
+  const order = ['hudba', 'malba-grafika', 'literatura', 'divadlo-performance']
+  return result.docs.sort((a: any, b: any) => {
+    const aIndex = order.indexOf(a.slug || '')
+    const bIndex = order.indexOf(b.slug || '')
+    return (aIndex === -1 ? 999 : aIndex) - (bIndex === -1 ? 999 : bIndex)
+  })
 }
 
 export default async function CategoriesIndex() {
