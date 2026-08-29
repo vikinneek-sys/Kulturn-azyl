@@ -10,13 +10,15 @@ export default function OProjektuPage() {
       <section className="section">
         <div className="container static-card">
           <p>
-            Kulturní azyl je magazín pro kulturní dění, které nechce stát v řadě u korporátního
-            bufetu. Zajímá nás hudba, obraz, literatura, divadlo, performance a všechno mezi tím,
-            co má špínu za nehty a smysl v hrudi.
+            Jsme kulturní azyl, začínáme od začátku. Tak jako každý umělec. A právě pro ty
+            utváříme mediální prostor.
           </p>
           <p>
-            Web je navržený jako redakční systém: redaktoři píšou, editoři schvalují a publikují.
-            Díky tomu může projekt růst bez toho, aby se z něj stal sdílený Google dokument v plamenech.
+            Hledáme akce, které si zaslouží větší dosah. Kapely, které hledají své publikum.
+            Výtvarníky, kteří se chtějí pochlubit první výstavou a další.
+          </p>
+          <p>
+            Hledáme čtenáře, kteří chtějí poznat něco jiného. Jsme KULTURNÍ AZYL.
           </p>
         </div>
       </section>
