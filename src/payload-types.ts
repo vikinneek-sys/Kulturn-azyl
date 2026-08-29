@@ -221,9 +221,12 @@ export interface Article {
   category: number | Category;
   author: number | User;
   /**
-   * Redaktor může poslat ke schválení. Publikuje editor/admin.
+   * Redaktor: Koncept → Ke schválení. Editor/Admin: Publikuje. (Redaktořský pokus o publikaci se automaticky změní na Ke schválení)
    */
   status: 'draft' | 'review' | 'published';
+  /**
+   * Pouze administrátor může zařadit článek mezi doporučené.
+   */
   featured?: boolean | null;
   publishedAt?: string | null;
   tags?:
@@ -232,50 +235,52 @@ export interface Article {
         id?: string | null;
       }[]
     | null;
-  content: (
-    | {
-        text: string;
-        level?: ('h2' | 'h3') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'heading';
-      }
-    | {
-        text: string;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'paragraph';
-      }
-    | {
-        image: number | Media;
-        caption?: string | null;
-        width?: ('full' | 'normal' | 'small') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'image';
-      }
-    | {
-        image: number | Media;
-        text: string;
-        imagePosition?: ('left' | 'right') | null;
-        imageWidth?: ('small' | 'medium' | 'large') | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'textWithImage';
-      }
-    | {
-        images: {
-          image: number | Media;
-          caption?: string | null;
-          id?: string | null;
-        }[];
-        autoplay?: boolean | null;
-        autoplaySpeed?: number | null;
-        id?: string | null;
-        blockName?: string | null;
-        blockType: 'gallery';
-      }
-  )[];
+  content?:
+    | (
+        | {
+            text: string;
+            level?: ('h2' | 'h3') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'heading';
+          }
+        | {
+            text: string;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'paragraph';
+          }
+        | {
+            image: number | Media;
+            caption?: string | null;
+            width?: ('full' | 'normal' | 'small') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'image';
+          }
+        | {
+            image: number | Media;
+            text: string;
+            imagePosition?: ('left' | 'right') | null;
+            imageWidth?: ('small' | 'medium' | 'large') | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'textWithImage';
+          }
+        | {
+            images: {
+              image: number | Media;
+              caption?: string | null;
+              id?: string | null;
+            }[];
+            autoplay?: boolean | null;
+            autoplaySpeed?: number | null;
+            id?: string | null;
+            blockName?: string | null;
+            blockType: 'gallery';
+          }
+      )[]
+    | null;
   updatedAt: string;
   createdAt: string;
 }
