@@ -19,7 +19,7 @@ const categories = [
     description: 'Žádná maturita. Už stačilo Shakespera a Máchy. Přečti si něco od lidí, které znáš a chápeš, ať už chceš romány nebo verše.',
   },
   {
-    title: 'Divadlo/performance',
+    title: 'Divadlo / performance',
     slug: 'divadlo-performance',
     description: 'Člověk nemusí všechno zaznamenat. Něco se dá ukázat na prknech co znamenají svět. Co takhle prkna, která znamenají podsvětí?',
   },
