@@ -10,7 +10,7 @@ const categories = [
   },
   {
     title: 'Výtvarné umění',
-    slug: 'vytvarne-umeni',
+    slug: 'malba-grafika',
     description: 'Máš volné místo na zdi? Chceš něco položit na noční stolek? Tady najdeš poctivé umělce ať už hledáš cool obrazy, postery nebo stylovější plastiky než zahradního trpaslíka z Unihobby.',
   },
   {
