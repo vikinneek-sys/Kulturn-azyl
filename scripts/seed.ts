@@ -92,6 +92,24 @@ async function main() {
 
   const createdCategories: any[] = []
 
+  // Delete old categories that are not in the current list
+  const allCategories = await payload.find({
+    collection: 'categories',
+    limit: 100,
+    overrideAccess: true,
+  })
+
+  const currentSlugs = categories.map(c => c.slug)
+  for (const oldCategory of allCategories.docs) {
+    if (!currentSlugs.includes(oldCategory.slug)) {
+      await payload.delete({
+        collection: 'categories',
+        id: oldCategory.id,
+        overrideAccess: true,
+      })
+    }
+  }
+
   for (const category of categories) {
     const existing = await payload.find({
       collection: 'categories',
