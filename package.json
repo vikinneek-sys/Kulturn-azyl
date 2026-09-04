@@ -24,8 +24,8 @@
     "graphql": "latest",
     "next": "15.4.11",
     "payload": "3.86.0",
-    "react": "latest",
-    "react-dom": "latest",
+    "react": "19.1.0",
+    "react-dom": "19.1.0",
     "sharp": "latest"
   },
   "devDependencies": {
