@@ -6,7 +6,7 @@
   "packageManager": "pnpm@11.8.0",
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "pnpm generate:importmap && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
