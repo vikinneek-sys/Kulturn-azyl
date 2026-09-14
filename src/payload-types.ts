@@ -229,6 +229,9 @@ export interface Article {
    */
   featured?: boolean | null;
   publishedAt?: string | null;
+  /**
+   * Počet otevření článku na veřejném webu.
+   */
   views?: number | null;
   tags?:
     | {
@@ -491,6 +494,7 @@ export interface ArticlesSelect<T extends boolean = true> {
   status?: T;
   featured?: T;
   publishedAt?: T;
+  views?: T;
   tags?:
     | T
     | {

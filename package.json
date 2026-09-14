@@ -6,15 +6,15 @@
   "packageManager": "pnpm@11.8.0",
   "scripts": {
     "dev": "next dev",
-    "build": "pnpm generate:importmap && next build",
-    "vercel-build": "pnpm ci",
+    "build": "pnpm migrate:prod && pnpm generate:importmap && next build",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
+    "migrate:prod": "tsx scripts/ensure-article-views.ts",
     "generate:types": "npm run payload -- generate:types",
     "generate:importmap": "npm run payload -- generate:importmap",
     "seed": "tsx scripts/seed.ts",
-    "ci": "cross-env PAYLOAD_MIGRATING=true payload migrate && pnpm build"
+    "ci": "pnpm build"
   },
   "dependencies": {
     "@payloadcms/db-postgres": "3.86.0",
