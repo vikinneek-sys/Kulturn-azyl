@@ -18,13 +18,13 @@ const dirname = path.dirname(filename)
 
 const databaseURL =
   process.env.PAYLOAD_MIGRATING === 'true'
-    ? process.env.DATABASE_URL_UNPOOLED
+    ? process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL
     : process.env.DATABASE_URL
 
 if (!databaseURL) {
   throw new Error(
     process.env.PAYLOAD_MIGRATING === 'true'
-      ? 'Chybí proměnná DATABASE_URL_UNPOOLED.'
+      ? 'Chybí proměnná DATABASE_URL nebo DATABASE_URL_UNPOOLED.'
       : 'Chybí proměnná DATABASE_URL.',
   )
 }

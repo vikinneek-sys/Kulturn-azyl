@@ -7,6 +7,7 @@
   "scripts": {
     "dev": "next dev",
     "build": "pnpm generate:importmap && next build",
+    "vercel-build": "pnpm ci",
     "start": "next start",
     "typecheck": "tsc --noEmit",
     "payload": "cross-env NODE_OPTIONS=--no-deprecation payload",
