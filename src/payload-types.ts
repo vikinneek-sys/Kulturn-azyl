@@ -229,6 +229,7 @@ export interface Article {
    */
   featured?: boolean | null;
   publishedAt?: string | null;
+  views?: number | null;
   tags?:
     | {
         tag?: ('rock' | 'pop' | 'metal' | 'folk' | 'jazz' | 'blues' | 'rap' | 'hiphop' | 'reggae') | null;

@@ -167,6 +167,17 @@ export const Articles: CollectionConfig = {
       },
     },
     {
+      name: 'views',
+      type: 'number',
+      label: 'Počet zobrazení',
+      defaultValue: 0,
+      min: 0,
+      admin: {
+        position: 'sidebar',
+        description: 'Počet otevření článku na veřejném webu.',
+      },
+    },
+    {
       name: 'tags',
       type: 'array',
       label: 'Štítky / Žánry',

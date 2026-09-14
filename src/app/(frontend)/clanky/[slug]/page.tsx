@@ -38,6 +38,16 @@ export default async function ArticleDetailPage({ params }: Props) {
   const article: any = result.docs[0]
   if (!article) return notFound()
 
+  await payload.update({
+    collection: 'articles',
+    id: article.id,
+    data: {
+      views: (article.views ?? 0) + 1,
+    },
+    overrideAccess: true,
+  })
+  article.views = (article.views ?? 0) + 1
+
   const category = typeof article.category === 'object' ? article.category : null
   const author = typeof article.author === 'object' ? article.author : null
   const image = typeof article.heroImage === 'object' ? article.heroImage : null
@@ -55,6 +65,7 @@ export default async function ArticleDetailPage({ params }: Props) {
       <p className="page-intro">{article.excerpt}</p>
       <div className="meta-line">
         {article.publishedAt && <span>{formatDate(article.publishedAt)}</span>}
+        <span>Přečteno {article.views ?? 0}×</span>
         {author?.name && (
           <span>
             Autor:{' '}

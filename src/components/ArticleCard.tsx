@@ -27,6 +27,7 @@ export function ArticleCard({ article, large = false }: Props) {
             category?.title && <span>{category.title}</span>
           )}
           {article.publishedAt && <span>{formatDate(article.publishedAt)}</span>}
+          {typeof article.views === 'number' && <span>Přečteno {article.views}×</span>}
         </div>
         <h2>
           <Link href={`/clanky/${article.slug}`}>{article.title}</Link>
