@@ -4,6 +4,7 @@ import { AdSlot } from '@/components/AdSlot'
 import { BlockRenderer } from '@/lib/blockRenderer'
 import { formatDate } from '@/lib/formatDate'
 import { getPayloadClient } from '@/lib/payload'
+import { sql } from '@payloadcms/db-postgres'
 
 export const dynamic = 'force-dynamic'
 
@@ -38,14 +39,11 @@ export default async function ArticleDetailPage({ params }: Props) {
   const article: any = result.docs[0]
   if (!article) return notFound()
 
-  await payload.update({
-    collection: 'articles',
-    id: article.id,
-    data: {
-      views: (article.views ?? 0) + 1,
-    },
-    overrideAccess: true,
-  })
+  await payload.db.drizzle.execute(sql`
+    UPDATE "articles"
+    SET "views" = COALESCE("views", 0) + 1
+    WHERE "id" = ${article.id}
+  `)
   article.views = (article.views ?? 0) + 1
 
   const category = typeof article.category === 'object' ? article.category : null
