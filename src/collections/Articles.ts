@@ -1,6 +1,38 @@
 import type { CollectionConfig } from 'payload'
 import { adminsAndEditors, adminsEditorsOrAuthor, authenticated, anyone, isAdminOrEditorUser, isRedaktor } from '@/access'
 
+function plainTextToRichText(text: string) {
+  return {
+    root: {
+      type: 'root',
+      children: [
+        {
+          type: 'paragraph',
+          children: [
+            {
+              detail: 0,
+              format: 0,
+              mode: 'normal',
+              style: '',
+              text,
+              type: 'text',
+              version: 1,
+            },
+          ],
+          direction: null,
+          format: '',
+          indent: 0,
+          version: 1,
+        },
+      ],
+      direction: null,
+      format: '',
+      indent: 0,
+      version: 1,
+    },
+  }
+}
+
 export const Articles: CollectionConfig = {
   slug: 'articles',
   labels: {
@@ -29,6 +61,23 @@ export const Articles: CollectionConfig = {
     delete: adminsAndEditors,
   },
   hooks: {
+    afterRead: [
+      ({ doc }) => {
+        const content = (doc as any).content
+        if (!Array.isArray(content)) return doc
+
+        for (const block of content) {
+          if (
+            (block.blockType === 'paragraph' || block.blockType === 'textWithImage') &&
+            typeof block.text === 'string'
+          ) {
+            block.text = plainTextToRichText(block.text)
+          }
+        }
+
+        return doc
+      },
+    ],
     beforeChange: [
       ({ data, req, operation }) => {
         const user = req.user as any
@@ -244,7 +293,7 @@ export const Articles: CollectionConfig = {
           fields: [
             {
               name: 'text',
-              type: 'textarea',
+              type: 'richText',
               label: 'Text',
               required: true,
             },
@@ -298,7 +347,7 @@ export const Articles: CollectionConfig = {
             },
             {
               name: 'text',
-              type: 'textarea',
+              type: 'richText',
               label: 'Text (bude obtékat obrázek)',
               required: true,
             },
