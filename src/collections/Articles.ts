@@ -174,7 +174,12 @@ export const Articles: CollectionConfig = {
       min: 0,
       admin: {
         position: 'sidebar',
+        readOnly: true,
         description: 'Počet otevření článku na veřejném webu.',
+      },
+      access: {
+        create: () => false,
+        update: () => false,
       },
     },
     {
