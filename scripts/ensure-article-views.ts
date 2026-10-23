@@ -1,10 +1,10 @@
 import 'dotenv/config'
-import config from '../src/payload.config'
-import { sql } from '@payloadcms/db-postgres'
 import { Pool } from 'pg'
-import { getPayload } from 'payload'
 
-const databaseURL = process.env.DATABASE_URL
+const databaseURL =
+  process.env.PAYLOAD_MIGRATING === 'true'
+    ? process.env.DATABASE_URL_UNPOOLED || process.env.DATABASE_URL
+    : process.env.DATABASE_URL
 if (!databaseURL) {
   throw new Error('Chybí proměnná DATABASE_URL.')
 }
@@ -33,14 +33,10 @@ try {
       `ALTER TABLE public."${tableName}" ALTER COLUMN "text" TYPE jsonb USING to_jsonb("text")`,
     )
   }
+
+  await pool.query(
+    'ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "views" numeric DEFAULT 0 NOT NULL',
+  )
 } finally {
   await pool.end()
 }
-
-const payload = await getPayload({ config })
-
-await payload.db.drizzle.execute(sql`
-  ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "views" numeric DEFAULT 0 NOT NULL;
-`)
-
-await payload.db.destroy?.()
