@@ -88,7 +88,6 @@ export const Articles: CollectionConfig = {
       type: 'textarea',
       label: 'Perex',
       required: true,
-      maxLength: 280,
     },
     {
       name: 'heroImage',
