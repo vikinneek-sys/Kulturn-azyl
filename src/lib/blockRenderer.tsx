@@ -184,8 +184,7 @@ function renderTextWithImage(block: TextWithImageBlock, index: number) {
   )
 }
 
-function renderGallery(block: GalleryBlock, index: number) {
-  // eslint-disable-next-line react-hooks/rules-of-hooks
+function GalleryBlockRenderer({ block, index }: { block: GalleryBlock; index: number }) {
   const [currentIndex, setCurrentIndex] = useState(0)
 
   if (!block.images || block.images.length === 0) return null
@@ -251,7 +250,7 @@ function renderBlock(block: Block, index: number): React.ReactNode {
     case 'textWithImage':
       return renderTextWithImage(block, index)
     case 'gallery':
-      return renderGallery(block, index)
+      return <GalleryBlockRenderer key={index} block={block} index={index} />
     default:
       return null
   }
