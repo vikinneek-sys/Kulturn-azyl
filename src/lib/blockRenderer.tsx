@@ -15,22 +15,26 @@ type ParagraphBlock = {
   text: string | LexicalDoc
 }
 
+type ArticleImage = {
+  url: string
+  alt?: string
+  sizes?: {
+    thumbnail?: {
+      url?: string | null
+    } | null
+  } | null
+}
+
 type ImageBlock = {
   blockType: 'image'
-  image: {
-    url: string
-    alt?: string
-  }
+  image: ArticleImage
   caption?: string
   width?: 'full' | 'normal' | 'small'
 }
 
 type TextWithImageBlock = {
   blockType: 'textWithImage'
-  image: {
-    url: string
-    alt?: string
-  }
+  image: ArticleImage
   text: string | LexicalDoc
   imagePosition?: 'left' | 'right'
   imageWidth?: 'small' | 'medium' | 'large'
@@ -39,10 +43,7 @@ type TextWithImageBlock = {
 type GalleryBlock = {
   blockType: 'gallery'
   images: Array<{
-    image: {
-      url: string
-      alt?: string
-    }
+    image: ArticleImage
     caption?: string
   }>
   autoplay?: boolean
@@ -207,11 +208,12 @@ function renderParagraph(block: ParagraphBlock, index: number) {
 
 function renderImage(block: ImageBlock, index: number) {
   const widthClass = block.width ? `image-width-${block.width}` : 'image-width-normal'
+  const imageUrl = block.image.sizes?.thumbnail?.url || block.image.url
 
   return (
     <figure key={index} className={`block-image ${widthClass}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={block.image.url} alt={block.image.alt || 'Obrázek'} />
+      <img src={imageUrl} alt={block.image.alt || 'Obrázek'} />
       {block.caption && <figcaption>{block.caption}</figcaption>}
     </figure>
   )
@@ -220,11 +222,12 @@ function renderImage(block: ImageBlock, index: number) {
 function renderTextWithImage(block: TextWithImageBlock, index: number) {
   const positionClass = block.imagePosition === 'right' ? 'image-right' : 'image-left'
   const widthClass = block.imageWidth ? `image-width-${block.imageWidth}` : 'image-width-medium'
+  const imageUrl = block.image.sizes?.thumbnail?.url || block.image.url
 
   return (
     <div key={index} className={`block-text-with-image ${positionClass} ${widthClass}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={block.image.url} alt={block.image.alt || 'Obrázek'} className="float-image" />
+      <img src={imageUrl} alt={block.image.alt || 'Obrázek'} className="float-image" />
       <div className="text-content">
         {typeof block.text === 'string' ? (
           <p>{block.text}</p>
@@ -242,6 +245,7 @@ function GalleryBlockRenderer({ block, index }: { block: GalleryBlock; index: nu
   if (!block.images || block.images.length === 0) return null
 
   const current = block.images[currentIndex]
+  const imageUrl = current.image.sizes?.thumbnail?.url || current.image.url
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? block.images.length - 1 : prev - 1))
@@ -256,7 +260,7 @@ function GalleryBlockRenderer({ block, index }: { block: GalleryBlock; index: nu
       <div className="gallery-viewer">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
-          src={current.image.url}
+          src={imageUrl}
           alt={current.image.alt || `Fotografie ${currentIndex + 1}`}
           className="gallery-image"
         />
