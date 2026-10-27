@@ -757,6 +757,10 @@ h3 {
   display: flow-root; /* Creates new block formatting context */
 }
 
+.block-text-with-image .text-content > :first-child {
+  margin-top: 0;
+}
+
 .block-text-with-image.image-left .float-image {
   margin: 0;
 }
