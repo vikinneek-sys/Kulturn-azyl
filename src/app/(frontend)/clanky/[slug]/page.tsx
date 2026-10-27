@@ -82,6 +82,20 @@ export default async function ArticleDetailPage({ params }: Props) {
       )}
       <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE} />
       <BlockRenderer blocks={article.content} />
+      {author?.name && (
+        <section className="article-author" aria-label="Autor článku">
+          {typeof author.avatar === 'object' && author.avatar?.url && (
+            // eslint-disable-next-line @next/next/no-img-element
+            <img src={author.avatar.url} alt={author.avatar.alt || author.name} className="article-author__avatar" />
+          )}
+          <div className="article-author__content">
+            <p className="eyebrow">O autorovi</p>
+            <h2>{author.name}</h2>
+            {author.bio && <p>{author.bio}</p>}
+            <Link href={`/redakce/${author.id}`}>Zobrazit profil autora →</Link>
+          </div>
+        </section>
+      )}
     </article>
   )
 }

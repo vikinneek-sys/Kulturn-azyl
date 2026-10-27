@@ -529,6 +529,54 @@ h3 {
   padding: 3rem 0;
 }
 
+.article-author {
+  display: flex;
+  align-items: center;
+  gap: 1.5rem;
+  margin-top: 3rem;
+  padding: 1.5rem;
+  border: 1px solid var(--line);
+  border-radius: 1.25rem;
+  background: var(--panel);
+}
+
+.article-author__avatar {
+  width: 96px;
+  height: 96px;
+  flex: 0 0 96px;
+  object-fit: cover;
+  border: 1px solid var(--line);
+  border-radius: 50%;
+  background: var(--panel-soft);
+}
+
+.article-author__content {
+  min-width: 0;
+}
+
+.article-author__content .eyebrow {
+  margin: 0 0 0.5rem;
+}
+
+.article-author__content h2 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.article-author__content > p:not(.eyebrow) {
+  margin: 0.6rem 0;
+  color: var(--muted);
+}
+
+.article-author__content > a {
+  color: var(--text);
+  font-weight: 700;
+}
+
+.article-author__content > a:hover {
+  color: var(--accent);
+}
+
 .article-detail .article-hero-image {
   width: 100%;
   border-radius: 1.5rem;
@@ -1025,6 +1073,18 @@ h3 {
 
   .author-profile-header {
     display: block;
+  }
+
+  .article-author {
+    align-items: flex-start;
+    gap: 1rem;
+    padding: 1rem;
+  }
+
+  .article-author__avatar {
+    width: 72px;
+    height: 72px;
+    flex-basis: 72px;
   }
 
   .author-avatar {
