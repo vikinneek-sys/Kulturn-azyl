@@ -1,5 +1,6 @@
 import Link from 'next/link'
 import { formatDate } from '@/lib/formatDate'
+import { formatPhotoCredit } from '@/lib/formatPhotoCredit'
 
 type Props = {
   article: any
@@ -10,6 +11,7 @@ export function ArticleCard({ article, large = false }: Props) {
   const category = typeof article.category === 'object' ? article.category : null
   const author = typeof article.author === 'object' ? article.author : null
   const image = typeof article.heroImage === 'object' ? article.heroImage : null
+  const photoCredit = formatPhotoCredit(image?.credit)
 
   return (
     <article className={large ? 'article-card article-card-large' : 'article-card'}>
@@ -19,7 +21,7 @@ export function ArticleCard({ article, large = false }: Props) {
             {/* eslint-disable-next-line @next/next/no-img-element */}
             <img src={image.url} alt={image.alt || article.title} className="article-image" />
           </Link>
-          {image.credit && <p className="image-credit">Foto: {image.credit}</p>}
+          {photoCredit && <p className="image-credit">Foto: {photoCredit}</p>}
         </div>
       )}
       <div className="article-body">

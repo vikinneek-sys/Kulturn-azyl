@@ -3,6 +3,7 @@
 import Image from 'next/image'
 import { useState } from 'react'
 import type React from 'react'
+import { formatPhotoCredit } from '@/lib/formatPhotoCredit'
 
 type HeadingBlock = {
   blockType: 'heading'
@@ -210,13 +211,14 @@ function renderParagraph(block: ParagraphBlock, index: number) {
 function renderImage(block: ImageBlock, index: number) {
   const widthClass = block.width ? `image-width-${block.width}` : 'image-width-normal'
   const imageUrl = block.image.sizes?.thumbnail?.url || block.image.url
+  const photoCredit = formatPhotoCredit(block.image.credit)
 
   return (
     <figure key={index} className={`block-image ${widthClass}`}>
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={imageUrl} alt={block.image.alt || 'Obrázek'} />
       {block.caption && <figcaption>{block.caption}</figcaption>}
-      {block.image.credit && <figcaption className="image-credit">Foto: {block.image.credit}</figcaption>}
+      {photoCredit && <figcaption className="image-credit">Foto: {photoCredit}</figcaption>}
     </figure>
   )
 }
@@ -225,13 +227,14 @@ function renderTextWithImage(block: TextWithImageBlock, index: number) {
   const positionClass = block.imagePosition === 'right' ? 'image-right' : 'image-left'
   const widthClass = block.imageWidth ? `image-width-${block.imageWidth}` : 'image-width-medium'
   const imageUrl = block.image.sizes?.thumbnail?.url || block.image.url
+  const photoCredit = formatPhotoCredit(block.image.credit)
 
   return (
     <div key={index} className={`block-text-with-image ${positionClass} ${widthClass}`}>
       <figure className="float-image-figure">
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={imageUrl} alt={block.image.alt || 'Obrázek'} className="float-image" />
-        {block.image.credit && <figcaption className="image-credit">Foto: {block.image.credit}</figcaption>}
+        {photoCredit && <figcaption className="image-credit">Foto: {photoCredit}</figcaption>}
       </figure>
       <div className="text-content">
         {typeof block.text === 'string' ? (
@@ -251,6 +254,7 @@ function GalleryBlockRenderer({ block, index }: { block: GalleryBlock; index: nu
 
   const current = block.images[currentIndex]
   const imageUrl = current.image.sizes?.thumbnail?.url || current.image.url
+  const photoCredit = formatPhotoCredit(current.image.credit)
 
   const goToPrevious = () => {
     setCurrentIndex((prev) => (prev === 0 ? block.images.length - 1 : prev - 1))
@@ -270,7 +274,7 @@ function GalleryBlockRenderer({ block, index }: { block: GalleryBlock; index: nu
           className="gallery-image"
         />
         {current.caption && <p className="gallery-caption">{current.caption}</p>}
-        {current.image.credit && <p className="image-credit">Foto: {current.image.credit}</p>}
+        {photoCredit && <p className="image-credit">Foto: {photoCredit}</p>}
       </div>
 
       {block.images.length > 1 && (

@@ -2,6 +2,7 @@ import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { getPayloadClient } from '@/lib/payload'
 import { ArticleCard } from '@/components/ArticleCard'
+import { formatPhotoCredit } from '@/lib/formatPhotoCredit'
 
 export const dynamic = 'force-dynamic'
 
@@ -28,6 +29,7 @@ export default async function AuthorProfilePage({ params }: Props) {
   if (!user) return notFound()
 
   const avatar = typeof user.avatar === 'object' ? user.avatar : null
+  const photoCredit = formatPhotoCredit(avatar?.credit)
 
   const articles = await payload.find({
     collection: 'articles',
@@ -58,7 +60,7 @@ export default async function AuthorProfilePage({ params }: Props) {
             <div className="author-avatar-container">
               {/* eslint-disable-next-line @next/next/no-img-element */}
               <img src={avatar.url} alt={avatar.alt || user.name} className="author-avatar" />
-              {avatar.credit && <p className="image-credit">Foto: {avatar.credit}</p>}
+              {photoCredit && <p className="image-credit">Foto: {photoCredit}</p>}
             </div>
           )}
           <div>

@@ -3,6 +3,7 @@ import { notFound } from 'next/navigation'
 import { AdSlot } from '@/components/AdSlot'
 import { BlockRenderer } from '@/lib/blockRenderer'
 import { formatDate } from '@/lib/formatDate'
+import { formatPhotoCredit } from '@/lib/formatPhotoCredit'
 import { getPayloadClient } from '@/lib/payload'
 import { sql } from '@payloadcms/db-postgres'
 
@@ -49,6 +50,7 @@ export default async function ArticleDetailPage({ params }: Props) {
   const category = typeof article.category === 'object' ? article.category : null
   const author = typeof article.author === 'object' ? article.author : null
   const image = typeof article.heroImage === 'object' ? article.heroImage : null
+  const photoCredit = formatPhotoCredit(image?.credit)
 
   return (
     <article className="article-detail">
@@ -75,7 +77,7 @@ export default async function ArticleDetailPage({ params }: Props) {
         <figure className="article-hero-figure">
           {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={image.url} alt={image.alt || article.title} className="article-hero-image" />
-          {image.credit && <figcaption className="image-credit">Foto: {image.credit}</figcaption>}
+          {photoCredit && <figcaption className="image-credit">Foto: {photoCredit}</figcaption>}
         </figure>
       )}
       <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE} />
