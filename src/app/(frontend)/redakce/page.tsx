@@ -1,6 +1,5 @@
 import Link from 'next/link'
 import { getPayloadClient } from '@/lib/payload'
-import { formatPhotoCredit } from '@/lib/formatPhotoCredit'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,14 +28,12 @@ export default async function RedakcePage() {
         <div className="container grid">
           {users.docs.map((user: any) => {
             const avatar = typeof user.avatar === 'object' ? user.avatar : null
-            const photoCredit = formatPhotoCredit(avatar?.credit)
             return (
               <Link href={`/redakce/${user.id}`} className="static-card author-card" key={user.id}>
                 {avatar?.url && (
                   <>
                     {/* eslint-disable-next-line @next/next/no-img-element */}
                     <img src={avatar.url} alt={avatar.alt || user.name} className="article-image" />
-                    {photoCredit && <p className="image-credit">Foto: {photoCredit}</p>}
                   </>
                 )}
                 <h2>{user.name}</h2>
