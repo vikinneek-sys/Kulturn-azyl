@@ -55,8 +55,11 @@ export default async function AuthorProfilePage({ params }: Props) {
       <section className="page-header">
         <div className="container author-profile-header">
           {avatar?.url && (
-            // eslint-disable-next-line @next/next/no-img-element
-            <img src={avatar.url} alt={avatar.alt || user.name} className="author-avatar" />
+            <div className="author-avatar-container">
+              {/* eslint-disable-next-line @next/next/no-img-element */}
+              <img src={avatar.url} alt={avatar.alt || user.name} className="author-avatar" />
+              {avatar.credit && <p className="image-credit">Foto: {avatar.credit}</p>}
+            </div>
           )}
           <div>
             <p className="eyebrow">autor</p>

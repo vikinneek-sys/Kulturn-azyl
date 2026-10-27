@@ -31,8 +31,11 @@ export default async function RedakcePage() {
             return (
               <Link href={`/redakce/${user.id}`} className="static-card author-card" key={user.id}>
                 {avatar?.url && (
-                  // eslint-disable-next-line @next/next/no-img-element
-                  <img src={avatar.url} alt={avatar.alt || user.name} className="article-image" />
+                  <>
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img src={avatar.url} alt={avatar.alt || user.name} className="article-image" />
+                    {avatar.credit && <p className="image-credit">Foto: {avatar.credit}</p>}
+                  </>
                 )}
                 <h2>{user.name}</h2>
                 <p className="eyebrow">{user.role}</p>

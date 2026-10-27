@@ -72,8 +72,11 @@ export default async function ArticleDetailPage({ params }: Props) {
         )}
       </div>
       {image?.url && (
-        // eslint-disable-next-line @next/next/no-img-element
-        <img src={image.url} alt={image.alt || article.title} className="article-hero-image" />
+        <figure className="article-hero-figure">
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img src={image.url} alt={image.alt || article.title} className="article-hero-image" />
+          {image.credit && <figcaption className="image-credit">Foto: {image.credit}</figcaption>}
+        </figure>
       )}
       <AdSlot slot={process.env.NEXT_PUBLIC_ADSENSE_SLOT_ARTICLE} />
       <BlockRenderer blocks={article.content} />

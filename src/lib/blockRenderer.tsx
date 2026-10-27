@@ -18,6 +18,7 @@ type ParagraphBlock = {
 type ArticleImage = {
   url: string
   alt?: string
+  credit?: string | null
   sizes?: {
     thumbnail?: {
       url?: string | null
@@ -215,6 +216,7 @@ function renderImage(block: ImageBlock, index: number) {
       {/* eslint-disable-next-line @next/next/no-img-element */}
       <img src={imageUrl} alt={block.image.alt || 'Obrázek'} />
       {block.caption && <figcaption>{block.caption}</figcaption>}
+      {block.image.credit && <figcaption className="image-credit">Foto: {block.image.credit}</figcaption>}
     </figure>
   )
 }
@@ -226,8 +228,11 @@ function renderTextWithImage(block: TextWithImageBlock, index: number) {
 
   return (
     <div key={index} className={`block-text-with-image ${positionClass} ${widthClass}`}>
-      {/* eslint-disable-next-line @next/next/no-img-element */}
-      <img src={imageUrl} alt={block.image.alt || 'Obrázek'} className="float-image" />
+      <figure className="float-image-figure">
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={imageUrl} alt={block.image.alt || 'Obrázek'} className="float-image" />
+        {block.image.credit && <figcaption className="image-credit">Foto: {block.image.credit}</figcaption>}
+      </figure>
       <div className="text-content">
         {typeof block.text === 'string' ? (
           <p>{block.text}</p>
@@ -265,6 +270,7 @@ function GalleryBlockRenderer({ block, index }: { block: GalleryBlock; index: nu
           className="gallery-image"
         />
         {current.caption && <p className="gallery-caption">{current.caption}</p>}
+        {current.image.credit && <p className="image-credit">Foto: {current.image.credit}</p>}
       </div>
 
       {block.images.length > 1 && (

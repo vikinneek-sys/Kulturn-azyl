@@ -14,10 +14,13 @@ export function ArticleCard({ article, large = false }: Props) {
   return (
     <article className={large ? 'article-card article-card-large' : 'article-card'}>
       {image?.url && (
-        <Link href={`/clanky/${article.slug}`} aria-label={`Otevřít článek ${article.title}`}>
-          {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={image.url} alt={image.alt || article.title} className="article-image" />
-        </Link>
+        <div className="article-card-image">
+          <Link href={`/clanky/${article.slug}`} aria-label={`Otevřít článek ${article.title}`}>
+            {/* eslint-disable-next-line @next/next/no-img-element */}
+            <img src={image.url} alt={image.alt || article.title} className="article-image" />
+          </Link>
+          {image.credit && <p className="image-credit">Foto: {image.credit}</p>}
+        </div>
       )}
       <div className="article-body">
         <div className="meta-line">
