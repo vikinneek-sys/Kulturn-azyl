@@ -205,8 +205,8 @@ h1,
 h2,
 h3 {
   font-family: var(--font-display);
-  letter-spacing: 0.025em;
-  line-height: 1.05;
+  letter-spacing: 0.01em;
+  line-height: 0.92;
   text-transform: uppercase;
 }
 
@@ -214,12 +214,20 @@ h3 {
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  gap: 0.12em;
+  gap: 0.06em;
   margin: 0.35rem 0 1rem;
   font-size: clamp(3.2rem, 6.6vw, 6.8rem);
-  letter-spacing: 0.02em;
-  line-height: 1;
+  letter-spacing: 0;
+  line-height: 0.88;
   text-shadow: 0 10px 30px rgba(225, 27, 27, 0.12), 0 2px 6px rgba(0,0,0,0.6);
+}
+
+.hero-headline,
+.hero-card__title,
+.article-card h2,
+.article-card h3 {
+  -webkit-text-stroke: 1px #000;
+  paint-order: stroke fill;
 }
 
 .hero-headline span {
@@ -266,8 +274,8 @@ h3 {
   color: var(--text);
   font-family: var(--font-display);
   font-size: clamp(2.1rem, 4vw, 3.5rem);
-  line-height: 1.04;
-  letter-spacing: 0.02em;
+  line-height: 0.92;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
 }
 
@@ -382,8 +390,6 @@ h3 {
 .article-card h3 {
   margin: 0.45rem 0 0.7rem;
   font-size: clamp(1.4rem, 3vw, 2.2rem);
-  letter-spacing: 0.035em;
-  line-height: 1.2;
 }
 
 .article-card:not(.article-card-large) h2 {
