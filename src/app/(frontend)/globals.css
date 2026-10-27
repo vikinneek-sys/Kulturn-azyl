@@ -389,11 +389,15 @@ h3 {
 .article-card h2,
 .article-card h3 {
   margin: 0.45rem 0 0.7rem;
-  font-size: clamp(1.4rem, 3vw, 2.2rem);
+  font-size: clamp(1.3rem, 2.5vw, 1.8rem);
+  letter-spacing: 0.02em;
+  line-height: 1.2;
+  -webkit-text-stroke: 0;
+  paint-order: normal;
 }
 
 .article-card:not(.article-card-large) h2 {
-  font-size: 1.45rem;
+  font-size: 1.35rem;
 }
 
 .article-card p {
