@@ -3,7 +3,7 @@
 import { useField, useFormFields } from '@payloadcms/ui'
 import type { SelectFieldClient } from 'payload'
 import { useEffect, useState } from 'react'
-import { allArticleTags, getArticleTagsForCategory } from '@/lib/articleTags'
+import { allArticleTags, articleTagLabels, getArticleTagsForCategory } from '@/lib/articleTags'
 
 type Props = {
   field: SelectFieldClient
@@ -114,7 +114,7 @@ export function CategoryTagSelect(props: Props) {
         <option value="">Vyberte štítek</option>
         {availableOptions.map((option) => (
           <option key={option.value} value={option.value}>
-            {option.label}
+            {articleTagLabels[option.value] ?? option.value}
           </option>
         ))}
       </select>
