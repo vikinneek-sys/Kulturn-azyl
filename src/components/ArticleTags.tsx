@@ -1,14 +1,26 @@
 import type { Article } from '@/payload-types'
 
-type Genre = NonNullable<NonNullable<Article['tags']>[number]['tag']>
+type ArticleTag = NonNullable<NonNullable<Article['tags']>[number]['tag']>
 
-const genreLabels: Record<Genre, string> = {
+const tagLabels: Record<ArticleTag, string> = {
   rock: 'Rock',
   elektronicka: 'Elektronická',
   rnb: 'R&B',
   'vazna-hudba': 'Vážná hudba',
   indie: 'Indie',
   alternativni: 'Alternativní',
+  'tiskova-zprava': 'Tisková zpráva',
+  rozhovor: 'Rozhovor',
+  novinky: 'Novinky',
+  album: 'Album',
+  singl: 'Singl',
+  ep: 'EP',
+  'cz-scena': 'CZ scéna',
+  'zahranicni-scena': 'Zahraniční scéna',
+  'sk-scena': 'SK scéna',
+  festival: 'Festival',
+  fotoreportaz: 'Fotoreportáž',
+  zakulisi: 'Zákulisí',
   pop: 'Pop',
   metal: 'Metal',
   folk: 'Folk',
@@ -24,15 +36,15 @@ type Props = {
 }
 
 export function ArticleTags({ tags }: Props) {
-  const genres = tags?.flatMap(({ tag }) => (tag ? [tag] : [])) ?? []
+  const selectedTags = tags?.flatMap(({ tag }) => (tag ? [tag] : [])) ?? []
 
-  if (genres.length === 0) return null
+  if (selectedTags.length === 0) return null
 
   return (
-    <ul className="article-tags" aria-label="Žánry">
-      {genres.map((genre, index) => (
-        <li className="article-tag" key={`${genre}-${index}`}>
-          {genreLabels[genre]}
+    <ul className="article-tags" aria-label="Štítky">
+      {selectedTags.map((tag, index) => (
+        <li className="article-tag" key={`${tag}-${index}`}>
+          {tagLabels[tag]}
         </li>
       ))}
     </ul>
