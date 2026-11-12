@@ -235,7 +235,7 @@ export interface Article {
   views?: number | null;
   tags?:
     | {
-        tag?: ('rock' | 'elektronicka' | 'rnb' | 'vazna-hudba' | 'indie' | 'alternativni' | 'tiskova-zprava' | 'rozhovor' | 'novinky' | 'album' | 'singl' | 'ep' | 'cz-scena' | 'zahranicni-scena' | 'sk-scena' | 'festival' | 'fotoreportaz' | 'zakulisi' | 'pop' | 'metal' | 'folk' | 'jazz' | 'blues' | 'rap' | 'hiphop' | 'reggae') | null;
+        tag?: ('rock' | 'elektronicka' | 'rnb' | 'vazna-hudba' | 'indie' | 'alternativni' | 'tiskova-zprava' | 'rozhovor' | 'novinky' | 'album' | 'singl' | 'ep' | 'cz-scena' | 'zahranicni-scena' | 'sk-scena' | 'festival' | 'fotoreportaz' | 'zakulisi' | 'malba' | 'kresba' | 'plastika' | 'grafika' | 'ilustrace' | 'vystava' | 'vydani' | 'tisk' | 'pop' | 'metal' | 'folk' | 'jazz' | 'blues' | 'rap' | 'hiphop' | 'reggae') | null;
         id?: string | null;
       }[]
     | null;
