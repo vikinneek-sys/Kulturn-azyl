@@ -1237,6 +1237,14 @@ h3 {
     padding-inline: 1rem;
   }
 
+  .article-detail {
+    padding-inline: 0.3rem;
+  }
+
+  .article-detail > h1 {
+    font-size: clamp(1.85rem, 8vw, 2rem);
+  }
+
   .brand {
     font-size: 1.35rem;
   }
