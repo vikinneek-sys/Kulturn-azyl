@@ -367,7 +367,7 @@ h3 {
 
 .hero-feature__title {
   max-width: none;
-  margin: 0 0 0.75rem;
+  margin: 1em 0 0.75rem;
   color: var(--accent);
   font-size: 0.78rem;
   line-height: 1.4;
