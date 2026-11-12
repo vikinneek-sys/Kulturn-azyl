@@ -72,9 +72,7 @@ export default async function HomePage() {
     getCategories(),
     getMostReadArticle(),
   ])
-  const rest = mostRead
-    ? articles.filter((article: any) => article.id !== mostRead.id).slice(0, 6)
-    : articles.slice(0, 6)
+  const rest = articles.slice(0, 6)
   const mostReadCategoryTitle =
     typeof mostRead?.category === 'object' && mostRead.category ? mostRead.category.title : 'Rubrika'
 
