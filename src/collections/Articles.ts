@@ -79,7 +79,7 @@ export const Articles: CollectionConfig = {
       },
     ],
     beforeChange: [
-      async ({ data, req, operation }) => {
+      async ({ data, originalDoc, req, operation }) => {
         const user = req.user as any
 
         if (user && !isAdminOrEditorUser(user)) {
@@ -112,8 +112,14 @@ export const Articles: CollectionConfig = {
           data.publishedAt = new Date().toISOString()
         }
 
-        if (Array.isArray(data.tags) && data.tags.length > 0) {
-          const categoryValue = data.category
+        const tags = Array.isArray(data.tags)
+          ? data.tags
+          : Array.isArray(originalDoc?.tags)
+            ? originalDoc.tags
+            : []
+
+        if (tags.length > 0) {
+          const categoryValue = data.category ?? originalDoc?.category
           const categorySlug =
             typeof categoryValue === 'object' &&
             categoryValue !== null &&
@@ -140,16 +146,16 @@ export const Articles: CollectionConfig = {
                 })
               : null
           const resolvedSlug = categorySlug ?? category?.slug
-          const invalidTagIndex = data.tags.findIndex(
-            (entry: { tag?: unknown }) =>
-              typeof entry.tag === 'string' &&
+          const invalidTagIndex = tags.findIndex(
+            (entry: { tag?: unknown } | null) =>
+              typeof entry?.tag === 'string' &&
               !getArticleTagsForCategory(resolvedSlug).some((tag) => tag.value === entry.tag),
           )
 
           if (invalidTagIndex !== -1) {
             throw new ValidationError({
               collection: 'articles',
-              id: req.data?.id,
+              id: originalDoc?.id,
               req,
               errors: [
                 {
