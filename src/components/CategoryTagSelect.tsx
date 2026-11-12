@@ -1,7 +1,6 @@
 'use client'
 
-import { SelectField } from '@payloadcms/ui/fields/Select'
-import { useFormFields } from '@payloadcms/ui'
+import { useField, useFormFields } from '@payloadcms/ui'
 import type { SelectFieldClient } from 'payload'
 import { useEffect, useState } from 'react'
 import { allArticleTags, getArticleTagsForCategory } from '@/lib/articleTags'
@@ -9,8 +8,7 @@ import { allArticleTags, getArticleTagsForCategory } from '@/lib/articleTags'
 type Props = {
   field: SelectFieldClient
   path: string
-  value?: string | string[]
-  onChange?: (value: string | string[]) => void
+  readOnly?: boolean
 }
 
 type Category = {
@@ -61,6 +59,9 @@ function fetchCategories(): Promise<Category[]> {
 
 export function CategoryTagSelect(props: Props) {
   const categoryValue = useFormFields(([fields]) => fields.category?.value)
+  const { errorMessage, setValue, showError, value } = useField<string | null>({
+    potentiallyStalePath: props.path,
+  })
   const [categories, setCategories] = useState<Category[]>([])
   const [loadError, setLoadError] = useState<string | null>(null)
 
@@ -89,7 +90,7 @@ export function CategoryTagSelect(props: Props) {
     ? categoryValue.slug
     : categories.find((category) => String(category.id) === String(relationId))?.slug
   const options = getArticleTagsForCategory(categorySlug)
-  const selectedValue = Array.isArray(props.value) ? props.value[0] : props.value
+  const selectedValue = typeof value === 'string' ? value : ''
   const selectedOption = allArticleTags.find((option) => option.value === selectedValue)
   const availableOptions =
     selectedOption && !options.some((option) => option.value === selectedValue)
@@ -97,17 +98,36 @@ export function CategoryTagSelect(props: Props) {
       : options
 
   return (
-    <>
-      <SelectField
-        {...props}
-        field={{ ...props.field, options: availableOptions }}
-        onChange={props.onChange}
-      />
+    <div className="field-type select">
+      <label className="field-label" htmlFor={props.path}>
+        Štítek
+      </label>
+      <select
+        id={props.path}
+        name={props.path}
+        value={selectedValue}
+        disabled={props.readOnly}
+        aria-invalid={showError || undefined}
+        aria-describedby={showError ? `${props.path}-error` : undefined}
+        onChange={(event) => setValue(event.currentTarget.value || null)}
+      >
+        <option value="">Vyberte štítek</option>
+        {availableOptions.map((option) => (
+          <option key={option.value} value={option.value}>
+            {option.label}
+          </option>
+        ))}
+      </select>
+      {showError && errorMessage && (
+        <p id={`${props.path}-error`} className="field-error" role="alert">
+          {errorMessage}
+        </p>
+      )}
       {loadError && <p role="alert">{loadError}</p>}
       {!categorySlug && !loadError && <p>Nejdřív vyberte rubriku pro nabídku jejích štítků.</p>}
       {selectedOption && !options.some((option) => option.value === selectedValue) && (
         <p role="alert">Tento štítek nepatří do vybrané rubriky. Vyberte jiný nebo ho odeberte.</p>
       )}
-    </>
+    </div>
   )
 }
