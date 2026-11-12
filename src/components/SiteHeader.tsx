@@ -40,6 +40,13 @@ export function SiteHeader() {
       </nav>
 
       <div className="header-actions">
+        <Link className="admin-link search-link" href="/hledat" onClick={closeMenu} aria-label="Hledat články">
+          <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+            <circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" strokeWidth="2" />
+            <path d="m15.5 15.5 4.2 4.2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+          </svg>
+        </Link>
+
         <Link className="admin-link" href="/admin" onClick={closeMenu} aria-label="Otevřít CMS">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <circle cx="12" cy="8" r="4" fill="currentColor" opacity="0.9" />
