@@ -135,10 +135,16 @@ export const Articles: CollectionConfig = {
                   'id' in categoryValue &&
                   (typeof categoryValue.id === 'number' || typeof categoryValue.id === 'string')
                 ? categoryValue.id
-                : null
+                : typeof categoryValue === 'object' &&
+                    categoryValue !== null &&
+                    'value' in categoryValue &&
+                    (typeof categoryValue.value === 'number' ||
+                      typeof categoryValue.value === 'string')
+                  ? categoryValue.value
+                  : null
           const category = categorySlug
             ? null
-            : categoryID
+            : categoryID !== null
               ? await req.payload.findByID({
                   collection: 'categories',
                   id: categoryID,
