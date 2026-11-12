@@ -520,9 +520,12 @@ h3 {
   line-height: 1.7;
 }
 
-.article-excerpt-link p,
-.article-detail .page-intro {
+.article-excerpt-link p {
   font-weight: 700;
+}
+
+.article-detail .page-intro {
+  font-weight: 800;
 }
 
 .meta-line,
