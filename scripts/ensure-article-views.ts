@@ -1,5 +1,6 @@
 import 'dotenv/config'
 import { Pool } from 'pg'
+import { allArticleTags } from '../src/lib/articleTags'
 
 const databaseURL =
   process.env.PAYLOAD_MIGRATING === 'true'
@@ -37,6 +38,23 @@ try {
   await pool.query(
     'ALTER TABLE "articles" ADD COLUMN IF NOT EXISTS "views" numeric DEFAULT 0 NOT NULL',
   )
+
+  const { rows: tagEnums } = await pool.query(
+    `SELECT 1
+    FROM pg_type
+    WHERE typnamespace = 'public'::regnamespace
+      AND typname = 'enum_articles_tags_tag'
+      AND typtype = 'e'`,
+  )
+
+  if (tagEnums.length > 0) {
+    for (const { value } of allArticleTags) {
+      const enumValue = value.replace(/'/g, "''")
+      await pool.query(
+        `ALTER TYPE "public"."enum_articles_tags_tag" ADD VALUE IF NOT EXISTS '${enumValue}'`,
+      )
+    }
+  }
 } finally {
   await pool.end()
 }
