@@ -1,8 +1,6 @@
 import type { Article } from '@/payload-types'
 import { articleTagLabels } from '@/lib/articleTags'
 
-type ArticleTag = NonNullable<NonNullable<Article['tags']>[number]['tag']>
-
 type Props = {
   tags?: Article['tags']
 }
@@ -16,7 +14,7 @@ export function ArticleTags({ tags }: Props) {
     <ul className="article-tags" aria-label="Štítky">
       {selectedTags.map((tag, index) => (
         <li className="article-tag" key={`${tag}-${index}`}>
-          {articleTagLabels[tag as ArticleTag]}
+          {articleTagLabels[tag]}
         </li>
       ))}
     </ul>
