@@ -18,6 +18,8 @@ type Category = {
   slug: string
 }
 
+let categoriesRequest: Promise<Category[]> | undefined
+
 function isCategory(value: unknown): value is Category {
   return (
     typeof value === 'object' &&
@@ -29,23 +31,32 @@ function isCategory(value: unknown): value is Category {
   )
 }
 
-async function fetchCategories(): Promise<Category[]> {
-  const response = await fetch('/api/categories?limit=100&depth=0')
-  if (!response.ok) {
-    throw new Error(`Rubriky se nepodařilo načíst (${response.status}).`)
+function fetchCategories(): Promise<Category[]> {
+  if (!categoriesRequest) {
+    categoriesRequest = (async () => {
+      const response = await fetch('/api/categories?limit=100&depth=0')
+      if (!response.ok) {
+        throw new Error(`Rubriky se nepodařilo načíst (${response.status}).`)
+      }
+
+      const result: unknown = await response.json()
+      if (
+        typeof result !== 'object' ||
+        result === null ||
+        !('docs' in result) ||
+        !Array.isArray(result.docs)
+      ) {
+        throw new Error('Odpověď se seznamem rubrik nemá očekávaný formát.')
+      }
+
+      return result.docs.filter(isCategory)
+    })().catch((error: unknown) => {
+      categoriesRequest = undefined
+      throw error
+    })
   }
 
-  const result: unknown = await response.json()
-  if (
-    typeof result !== 'object' ||
-    result === null ||
-    !('docs' in result) ||
-    !Array.isArray(result.docs)
-  ) {
-    throw new Error('Odpověď se seznamem rubrik nemá očekávaný formát.')
-  }
-
-  return result.docs.filter(isCategory)
+  return categoriesRequest
 }
 
 export function CategoryTagSelect(props: Props) {
