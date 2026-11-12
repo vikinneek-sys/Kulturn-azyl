@@ -358,6 +358,24 @@ h3 {
   box-shadow: 0 2.5rem 6rem rgba(0, 0, 0, 0.6), inset 0 1px 0 rgba(255,255,255,0.04);
 }
 
+.hero-card--most-read {
+  justify-content: flex-start;
+  min-height: 0;
+  padding: 0;
+  overflow: hidden;
+}
+
+.hero-card__image-link {
+  display: block;
+}
+
+.hero-card__image {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  background: var(--panel-soft);
+}
+
 .hero-card__topline {
   display: flex;
   justify-content: space-between;
@@ -371,7 +389,8 @@ h3 {
 
 .hero-card__title {
   display: block;
-  margin: 0 0 1rem;
+  margin: 0;
+  padding: 1.25rem 1.3rem 1.1rem;
   color: var(--text);
   font-family: var(--font-article-title);
   font-size: clamp(1.8rem, 3vw, 2.7rem);
