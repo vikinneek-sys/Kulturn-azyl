@@ -1,5 +1,20 @@
 import type { CollectionConfig } from 'payload'
 import { adminsAndEditors, adminsEditorsOrAuthor, authenticated, anyone, isAdminOrEditorUser, isRedaktor } from '@/access'
+import { allArticleTags, getArticleTagsForCategory } from '@/lib/articleTags'
+
+function getRelationID(value: unknown): number | string | null {
+  if (typeof value === 'number' || typeof value === 'string') return value
+  if (typeof value !== 'object' || value === null) return null
+
+  if ('id' in value && (typeof value.id === 'number' || typeof value.id === 'string')) {
+    return value.id
+  }
+  if ('value' in value && (typeof value.value === 'number' || typeof value.value === 'string')) {
+    return value.value
+  }
+
+  return null
+}
 
 function plainTextToRichText(text: string) {
   return {
@@ -238,51 +253,41 @@ export const Articles: CollectionConfig = {
           name: 'tag',
           type: 'select',
           label: 'Štítek',
-          options: [
-            { label: 'Rock', value: 'rock' },
-            { label: 'Elektronická', value: 'elektronicka' },
-            { label: 'R&B', value: 'rnb' },
-            { label: 'Vážná hudba', value: 'vazna-hudba' },
-            { label: 'Indie', value: 'indie' },
-            { label: 'Alternativní', value: 'alternativni' },
-            { label: 'Tisková zpráva', value: 'tiskova-zprava' },
-            { label: 'Rozhovor', value: 'rozhovor' },
-            { label: 'Novinky', value: 'novinky' },
-            { label: 'Album', value: 'album' },
-            { label: 'Singl', value: 'singl' },
-            { label: 'EP', value: 'ep' },
-            { label: 'CZ scéna', value: 'cz-scena' },
-            { label: 'Zahraniční scéna', value: 'zahranicni-scena' },
-            { label: 'SK scéna', value: 'sk-scena' },
-            { label: 'Festival', value: 'festival' },
-            { label: 'Fotoreportáž', value: 'fotoreportaz' },
-            { label: 'Zákulisí', value: 'zakulisi' },
-            { label: 'Malba', value: 'malba' },
-            { label: 'Kresba', value: 'kresba' },
-            { label: 'Plastika', value: 'plastika' },
-            { label: 'Grafika', value: 'grafika' },
-            { label: 'Ilustrace', value: 'ilustrace' },
-            { label: 'Výstava', value: 'vystava' },
-            { label: 'Vydání', value: 'vydani' },
-            { label: 'Tisk', value: 'tisk' },
-            { label: 'Vernisáž', value: 'vernisaz' },
-            { label: 'Autorské čtení', value: 'autorske-cteni' },
-            { label: 'Poezie', value: 'poezie' },
-            { label: 'Beletrie', value: 'beletrie' },
-            { label: 'Divadlo', value: 'divadlo' },
-            { label: 'Performance', value: 'performance' },
-            { label: 'Slam poetry', value: 'slam-poetry' },
-            { label: 'Sport', value: 'sport' },
-            { label: 'Ostatní', value: 'ostatni' },
-            { label: 'Pop', value: 'pop' },
-            { label: 'Metal', value: 'metal' },
-            { label: 'Folk', value: 'folk' },
-            { label: 'Jazz', value: 'jazz' },
-            { label: 'Blues', value: 'blues' },
-            { label: 'Rap', value: 'rap' },
-            { label: 'Hip-hop', value: 'hiphop' },
-            { label: 'Reggae', value: 'reggae' },
-          ],
+          options: allArticleTags,
+          validate: async (value, { data, req }) => {
+            if (typeof value !== 'string' || !value) return true
+
+            const categoryValue = data.category
+            const categorySlug =
+              typeof categoryValue === 'object' &&
+              categoryValue !== null &&
+              'slug' in categoryValue &&
+              typeof categoryValue.slug === 'string'
+                ? categoryValue.slug
+                : undefined
+            const categoryID = getRelationID(categoryValue)
+            const category = categorySlug
+              ? null
+              : categoryID
+                ? await req.payload.findByID({
+                    collection: 'categories',
+                    id: categoryID,
+                    depth: 0,
+                  })
+                : null
+            const resolvedSlug = categorySlug ?? category?.slug
+
+            if (!resolvedSlug) return true
+
+            return getArticleTagsForCategory(resolvedSlug).some((tag) => tag.value === value)
+              ? true
+              : 'Tento štítek není dostupný ve vybrané rubrice.'
+          },
+          admin: {
+            components: {
+              Field: '@/components/CategoryTagSelect#CategoryTagSelect',
+            },
+          },
         },
       ],
     },
