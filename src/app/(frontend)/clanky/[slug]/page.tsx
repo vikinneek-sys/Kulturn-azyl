@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { notFound } from 'next/navigation'
 import { AdSlot } from '@/components/AdSlot'
+import { ArticleTags } from '@/components/ArticleTags'
 import { BlockRenderer } from '@/lib/blockRenderer'
 import { formatDate } from '@/lib/formatDate'
 import { formatPhotoCredit } from '@/lib/formatPhotoCredit'
@@ -73,6 +74,7 @@ export default async function ArticleDetailPage({ params }: Props) {
           </span>
         )}
       </div>
+      <ArticleTags tags={article.tags} />
       {image?.url && (
         <figure className="article-hero-figure">
           {/* eslint-disable-next-line @next/next/no-img-element */}

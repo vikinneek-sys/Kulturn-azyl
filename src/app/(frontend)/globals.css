@@ -424,6 +424,28 @@ h3 {
   font-weight: 700;
 }
 
+.article-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  margin: 0.75rem 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article-tag {
+  padding: 0.25rem 0.6rem;
+  border: 1px solid rgba(225, 27, 27, 0.28);
+  border-radius: 999px;
+  color: var(--text);
+  background: rgba(225, 27, 27, 0.08);
+  font-size: 0.72rem;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  line-height: 1.4;
+  text-transform: uppercase;
+}
+
 .category-list {
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));

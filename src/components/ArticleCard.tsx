@@ -1,4 +1,5 @@
 import Link from 'next/link'
+import { ArticleTags } from '@/components/ArticleTags'
 import { formatDate } from '@/lib/formatDate'
 
 type Props = {
@@ -31,6 +32,7 @@ export function ArticleCard({ article, large = false }: Props) {
           {article.publishedAt && <span>{formatDate(article.publishedAt)}</span>}
           {typeof article.views === 'number' && <span>Přečteno {article.views}×</span>}
         </div>
+        <ArticleTags tags={article.tags} />
         <h2>
           <Link href={`/clanky/${article.slug}`}>{article.title}</Link>
         </h2>
