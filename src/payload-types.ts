@@ -235,7 +235,7 @@ export interface Article {
   views?: number | null;
   tags?:
     | {
-        tag?: ('rock' | 'pop' | 'metal' | 'folk' | 'jazz' | 'blues' | 'rap' | 'hiphop' | 'reggae') | null;
+        tag?: ('rock' | 'elektronicka' | 'rnb' | 'vazna-hudba' | 'indie' | 'alternativni' | 'pop' | 'metal' | 'folk' | 'jazz' | 'blues' | 'rap' | 'hiphop' | 'reggae') | null;
         id?: string | null;
       }[]
     | null;

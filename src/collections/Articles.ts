@@ -240,6 +240,11 @@ export const Articles: CollectionConfig = {
           label: 'Žánr',
           options: [
             { label: 'Rock', value: 'rock' },
+            { label: 'Elektronická', value: 'elektronicka' },
+            { label: 'R&B', value: 'rnb' },
+            { label: 'Vážná hudba', value: 'vazna-hudba' },
+            { label: 'Indie', value: 'indie' },
+            { label: 'Alternativní', value: 'alternativni' },
             { label: 'Pop', value: 'pop' },
             { label: 'Metal', value: 'metal' },
             { label: 'Folk', value: 'folk' },

@@ -4,6 +4,11 @@ type Genre = NonNullable<NonNullable<Article['tags']>[number]['tag']>
 
 const genreLabels: Record<Genre, string> = {
   rock: 'Rock',
+  elektronicka: 'Elektronická',
+  rnb: 'R&B',
+  'vazna-hudba': 'Vážná hudba',
+  indie: 'Indie',
+  alternativni: 'Alternativní',
   pop: 'Pop',
   metal: 'Metal',
   folk: 'Folk',
