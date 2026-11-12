@@ -365,6 +365,14 @@ h3 {
   overflow: hidden;
 }
 
+.hero-feature__title {
+  max-width: none;
+  margin: 0 0 0.75rem;
+  color: var(--accent);
+  font-size: 0.78rem;
+  line-height: 1.4;
+}
+
 .hero-card__image-link {
   display: block;
 }

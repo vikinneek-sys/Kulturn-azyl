@@ -82,25 +82,28 @@ export default async function HomePage() {
           </div>
 
           {mostRead ? (
-            <aside className="hero-card hero-card--most-read">
-              {mostReadImage?.url && (
-                <Link
-                  href={`/clanky/${mostRead.slug}`}
-                  className="hero-card__image-link"
-                  aria-label={`Otevřít článek ${mostRead.title}`}
-                >
-                  {/* eslint-disable-next-line @next/next/no-img-element */}
-                  <img
-                    src={mostReadImage.url}
-                    alt={mostReadImage.alt || mostRead.title}
-                    className="hero-card__image"
-                  />
+            <div className="hero-feature">
+              <p className="eyebrow hero-feature__title">Nejčtenější článek</p>
+              <aside className="hero-card hero-card--most-read">
+                {mostReadImage?.url && (
+                  <Link
+                    href={`/clanky/${mostRead.slug}`}
+                    className="hero-card__image-link"
+                    aria-label={`Otevřít článek ${mostRead.title}`}
+                  >
+                    {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <img
+                      src={mostReadImage.url}
+                      alt={mostReadImage.alt || mostRead.title}
+                      className="hero-card__image"
+                    />
+                  </Link>
+                )}
+                <Link href={`/clanky/${mostRead.slug}`} className="hero-card__title">
+                  {mostRead.title}
                 </Link>
-              )}
-              <Link href={`/clanky/${mostRead.slug}`} className="hero-card__title">
-                {mostRead.title}
-              </Link>
-            </aside>
+              </aside>
+            </div>
           ) : null}
         </div>
       </section>
