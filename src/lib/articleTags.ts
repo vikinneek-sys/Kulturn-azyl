@@ -57,7 +57,7 @@ export const commonArticleTags: OptionObject[] = [
   { label: 'Tisk', value: 'tisk' },
   { label: 'Vernisáž', value: 'vernisaz' },
   { label: 'Sport', value: 'sport' },
-  { label: 'Poznámka', value: 'poznamka' },
+  { label: 'Pozvánka', value: 'poznamka' },
   { label: 'Ostatní', value: 'ostatni' },
 ]
 
