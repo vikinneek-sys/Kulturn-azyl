@@ -1,4 +1,4 @@
-import type { CollectionConfig } from 'payload'
+import type { CollectionConfig, PayloadRequest } from 'payload'
 import { adminsAndEditors, adminsEditorsOrAuthor, authenticated, anyone, isAdminOrEditorUser, isRedaktor } from '@/access'
 import { allArticleTags, getArticleTagsForCategory } from '@/lib/articleTags'
 
@@ -254,7 +254,10 @@ export const Articles: CollectionConfig = {
           type: 'select',
           label: 'Štítek',
           options: allArticleTags,
-          validate: async (value, { data, req }) => {
+          validate: async (
+            value: unknown,
+            { data, req }: { data: Record<string, unknown>; req: PayloadRequest },
+          ) => {
             if (typeof value !== 'string' || !value) return true
 
             const categoryValue = data.category
