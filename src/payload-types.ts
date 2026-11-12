@@ -235,7 +235,54 @@ export interface Article {
   views?: number | null;
   tags?:
     | {
-        tag?: ('rock' | 'elektronicka' | 'rnb' | 'vazna-hudba' | 'indie' | 'alternativni' | 'tiskova-zprava' | 'rozhovor' | 'novinky' | 'album' | 'singl' | 'ep' | 'cz-scena' | 'zahranicni-scena' | 'sk-scena' | 'festival' | 'fotoreportaz' | 'zakulisi' | 'malba' | 'kresba' | 'plastika' | 'grafika' | 'ilustrace' | 'vystava' | 'vydani' | 'tisk' | 'vernisaz' | 'autorske-cteni' | 'poezie' | 'beletrie' | 'divadlo' | 'performance' | 'slam-poetry' | 'sport' | 'ostatni' | 'pop' | 'metal' | 'folk' | 'jazz' | 'blues' | 'rap' | 'hiphop' | 'reggae') | null;
+        tag?:
+          | (
+              | 'rock'
+              | 'elektronicka'
+              | 'rnb'
+              | 'vazna-hudba'
+              | 'indie'
+              | 'alternativni'
+              | 'pop'
+              | 'metal'
+              | 'folk'
+              | 'folklor'
+              | 'jazz'
+              | 'blues'
+              | 'rap'
+              | 'hiphop'
+              | 'reggae'
+              | 'malba'
+              | 'kresba'
+              | 'plastika'
+              | 'grafika'
+              | 'ilustrace'
+              | 'poezie'
+              | 'beletrie'
+              | 'autorske-cteni'
+              | 'divadlo'
+              | 'performance'
+              | 'slam-poetry'
+              | 'tiskova-zprava'
+              | 'rozhovor'
+              | 'novinky'
+              | 'album'
+              | 'singl'
+              | 'ep'
+              | 'cz-scena'
+              | 'zahranicni-scena'
+              | 'sk-scena'
+              | 'festival'
+              | 'fotoreportaz'
+              | 'zakulisi'
+              | 'vystava'
+              | 'vydani'
+              | 'tisk'
+              | 'vernisaz'
+              | 'sport'
+              | 'ostatni'
+            )
+          | null;
         id?: string | null;
       }[]
     | null;
