@@ -147,6 +147,63 @@ img {
   display: block;
 }
 
+.search-link {
+  cursor: pointer;
+}
+
+.header-search-form {
+  position: absolute;
+  top: calc(100% + 0.6rem);
+  right: min(2rem, 5vw);
+  z-index: 21;
+  display: flex;
+  width: min(26rem, calc(100vw - 2rem));
+  gap: 0.5rem;
+  padding: 0.65rem;
+  border: 1px solid var(--line);
+  border-radius: 1rem;
+  background: rgba(17, 16, 14, 0.98);
+  box-shadow: 0 1.25rem 3rem rgba(0, 0, 0, 0.5);
+}
+
+.header-search-form input {
+  flex: 1;
+  min-width: 0;
+  padding: 0.65rem 0.8rem;
+  border: 1px solid var(--line);
+  border-radius: 0.7rem;
+  background: var(--panel);
+  color: var(--text);
+  font: inherit;
+}
+
+.header-search-form input:focus {
+  outline: 2px solid var(--accent);
+  outline-offset: 1px;
+}
+
+.header-search-form button {
+  display: inline-flex;
+  width: 2.8rem;
+  flex: 0 0 2.8rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid var(--accent);
+  border-radius: 0.7rem;
+  background: var(--accent);
+  color: var(--text);
+  cursor: pointer;
+}
+
+.header-search-form button:hover {
+  background: var(--accent-dark);
+}
+
+.header-search-form button svg {
+  width: 1.15rem;
+  height: 1.15rem;
+}
+
 .search-form {
   display: flex;
   width: min(100%, 42rem);

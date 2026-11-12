@@ -16,6 +16,7 @@ const nav = [
 
 export function SiteHeader() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
+  const [isSearchOpen, setIsSearchOpen] = useState(false)
 
   const closeMenu = () => setIsMenuOpen(false)
 
@@ -40,12 +41,19 @@ export function SiteHeader() {
       </nav>
 
       <div className="header-actions">
-        <Link className="admin-link search-link" href="/hledat" onClick={closeMenu} aria-label="Hledat články">
+        <button
+          className="admin-link search-link"
+          type="button"
+          aria-label={isSearchOpen ? 'Zavřít vyhledávání' : 'Otevřít vyhledávání'}
+          aria-controls="header-search"
+          aria-expanded={isSearchOpen}
+          onClick={() => setIsSearchOpen((open) => !open)}
+        >
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
             <circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" strokeWidth="2" />
             <path d="m15.5 15.5 4.2 4.2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
           </svg>
-        </Link>
+        </button>
 
         <Link className="admin-link" href="/admin" onClick={closeMenu} aria-label="Otevřít CMS">
           <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
@@ -73,6 +81,27 @@ export function SiteHeader() {
           <span aria-hidden="true" />
         </button>
       </div>
+
+      {isSearchOpen && (
+        <form id="header-search" className="header-search-form" action="/hledat" method="get" role="search">
+          <label className="sr-only" htmlFor="header-search-input">
+            Název nebo text článku
+          </label>
+          <input
+            id="header-search-input"
+            type="search"
+            name="q"
+            placeholder="Hledat články..."
+            autoFocus
+          />
+          <button type="submit" aria-label="Hledat">
+            <svg viewBox="0 0 24 24" aria-hidden="true" focusable="false">
+              <circle cx="10.8" cy="10.8" r="6.3" fill="none" stroke="currentColor" strokeWidth="2" />
+              <path d="m15.5 15.5 4.2 4.2" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" />
+            </svg>
+          </button>
+        </form>
+      )}
     </header>
   )
 }
