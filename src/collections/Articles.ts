@@ -1,20 +1,6 @@
-import type { CollectionConfig, PayloadRequest } from 'payload'
+import { ValidationError, type CollectionConfig } from 'payload'
 import { adminsAndEditors, adminsEditorsOrAuthor, authenticated, anyone, isAdminOrEditorUser, isRedaktor } from '@/access'
 import { allArticleTags, getArticleTagsForCategory } from '@/lib/articleTags'
-
-function getRelationID(value: unknown): number | string | null {
-  if (typeof value === 'number' || typeof value === 'string') return value
-  if (typeof value !== 'object' || value === null) return null
-
-  if ('id' in value && (typeof value.id === 'number' || typeof value.id === 'string')) {
-    return value.id
-  }
-  if ('value' in value && (typeof value.value === 'number' || typeof value.value === 'string')) {
-    return value.value
-  }
-
-  return null
-}
 
 function plainTextToRichText(text: string) {
   return {
@@ -93,7 +79,7 @@ export const Articles: CollectionConfig = {
       },
     ],
     beforeChange: [
-      ({ data, req, operation }) => {
+      async ({ data, req, operation }) => {
         const user = req.user as any
 
         if (user && !isAdminOrEditorUser(user)) {
@@ -124,6 +110,55 @@ export const Articles: CollectionConfig = {
 
         if (data.status === 'published' && !data.publishedAt) {
           data.publishedAt = new Date().toISOString()
+        }
+
+        if (Array.isArray(data.tags) && data.tags.length > 0) {
+          const categoryValue = data.category
+          const categorySlug =
+            typeof categoryValue === 'object' &&
+            categoryValue !== null &&
+            'slug' in categoryValue &&
+            typeof categoryValue.slug === 'string'
+              ? categoryValue.slug
+              : undefined
+          const categoryID =
+            typeof categoryValue === 'number' || typeof categoryValue === 'string'
+              ? categoryValue
+              : typeof categoryValue === 'object' &&
+                  categoryValue !== null &&
+                  'id' in categoryValue &&
+                  (typeof categoryValue.id === 'number' || typeof categoryValue.id === 'string')
+                ? categoryValue.id
+                : null
+          const category = categorySlug
+            ? null
+            : categoryID
+              ? await req.payload.findByID({
+                  collection: 'categories',
+                  id: categoryID,
+                  depth: 0,
+                })
+              : null
+          const resolvedSlug = categorySlug ?? category?.slug
+          const invalidTagIndex = data.tags.findIndex(
+            (entry: { tag?: unknown }) =>
+              typeof entry.tag === 'string' &&
+              !getArticleTagsForCategory(resolvedSlug).some((tag) => tag.value === entry.tag),
+          )
+
+          if (invalidTagIndex !== -1) {
+            throw new ValidationError({
+              collection: 'articles',
+              id: req.data?.id,
+              req,
+              errors: [
+                {
+                  path: `tags.${invalidTagIndex}.tag`,
+                  message: 'Tento štítek není dostupný ve vybrané rubrice.',
+                },
+              ],
+            })
+          }
         }
 
         return data
@@ -254,38 +289,6 @@ export const Articles: CollectionConfig = {
           type: 'select',
           label: 'Štítek',
           options: allArticleTags,
-          validate: async (
-            value: unknown,
-            { data, req }: { data: Record<string, unknown>; req: PayloadRequest },
-          ) => {
-            if (typeof value !== 'string' || !value) return true
-
-            const categoryValue = data.category
-            const categorySlug =
-              typeof categoryValue === 'object' &&
-              categoryValue !== null &&
-              'slug' in categoryValue &&
-              typeof categoryValue.slug === 'string'
-                ? categoryValue.slug
-                : undefined
-            const categoryID = getRelationID(categoryValue)
-            const category = categorySlug
-              ? null
-              : categoryID
-                ? await req.payload.findByID({
-                    collection: 'categories',
-                    id: categoryID,
-                    depth: 0,
-                  })
-                : null
-            const resolvedSlug = categorySlug ?? category?.slug
-
-            if (!resolvedSlug) return true
-
-            return getArticleTagsForCategory(resolvedSlug).some((tag) => tag.value === value)
-              ? true
-              : 'Tento štítek není dostupný ve vybrané rubrice.'
-          },
           admin: {
             components: {
               Field: '@/components/CategoryTagSelect#CategoryTagSelect',
