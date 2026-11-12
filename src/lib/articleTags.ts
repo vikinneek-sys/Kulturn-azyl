@@ -20,6 +20,8 @@ export const articleTagGroups = {
     { label: 'EP', value: 'ep' },
     { label: 'Singl', value: 'singl' },
     { label: 'Album', value: 'album' },
+    { label: 'Turné', value: 'turne' },
+    { label: 'Koncert', value: 'koncert' },
   ],
   'malba-grafika': [
     { label: 'Malba', value: 'malba' },
