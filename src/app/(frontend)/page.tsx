@@ -5,16 +5,6 @@ import { getPayloadClient } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'
 
-function formatDate(value: string | Date | null | undefined) {
-  if (!value) return 'Nedávno'
-
-  return new Intl.DateTimeFormat('cs-CZ', {
-    day: 'numeric',
-    month: 'numeric',
-    year: 'numeric',
-  }).format(new Date(value))
-}
-
 async function getPublishedArticles(limit = 9) {
   const payload = await getPayloadClient()
   const result = await payload.find({
@@ -73,8 +63,7 @@ export default async function HomePage() {
     getMostReadArticle(),
   ])
   const rest = articles.slice(0, 6)
-  const mostReadCategoryTitle =
-    typeof mostRead?.category === 'object' && mostRead.category ? mostRead.category.title : 'Rubrika'
+  const mostReadImage = typeof mostRead?.heroImage === 'object' ? mostRead.heroImage : null
 
   return (
     <>
@@ -93,24 +82,24 @@ export default async function HomePage() {
           </div>
 
           {mostRead ? (
-            <aside className="hero-card">
-              <div className="hero-card__topline">
-                <span>Nejčtenější článek</span>
-                <time dateTime={mostRead.publishedAt ?? undefined}>{formatDate(mostRead.publishedAt)}</time>
-              </div>
-
+            <aside className="hero-card hero-card--most-read">
+              {mostReadImage?.url && (
+                <Link
+                  href={`/clanky/${mostRead.slug}`}
+                  className="hero-card__image-link"
+                  aria-label={`Otevřít článek ${mostRead.title}`}
+                >
+                  {/* eslint-disable-next-line @next/next/no-img-element */}
+                  <img
+                    src={mostReadImage.url}
+                    alt={mostReadImage.alt || mostRead.title}
+                    className="hero-card__image"
+                  />
+                </Link>
+              )}
               <Link href={`/clanky/${mostRead.slug}`} className="hero-card__title">
                 {mostRead.title}
               </Link>
-
-              <p className="hero-card__excerpt">{mostRead.excerpt}</p>
-
-              <div className="hero-card__footer">
-                <span>{mostReadCategoryTitle}</span>
-                <Link href={`/clanky/${mostRead.slug}`} className="hero-card__link">
-                  Číst článek →
-                </Link>
-              </div>
             </aside>
           ) : null}
         </div>
