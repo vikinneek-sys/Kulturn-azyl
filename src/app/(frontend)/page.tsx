@@ -32,6 +32,23 @@ async function getPublishedArticles(limit = 9) {
   return result.docs
 }
 
+async function getMostReadArticle() {
+  const payload = await getPayloadClient()
+  const result = await payload.find({
+    collection: 'articles',
+    depth: 2,
+    limit: 1,
+    sort: '-views',
+    where: {
+      status: {
+        equals: 'published',
+      },
+    },
+  })
+
+  return result.docs[0] ?? null
+}
+
 async function getCategories() {
   const payload = await getPayloadClient()
   const result = await payload.find({
@@ -50,11 +67,16 @@ async function getCategories() {
 }
 
 export default async function HomePage() {
-  const [articles, categories] = await Promise.all([getPublishedArticles(9), getCategories()])
-  const featured = articles.find((article: any) => article.featured) || articles[0]
-  const rest = featured ? articles.filter((article: any) => article.id !== featured.id).slice(0, 6) : []
-  const featuredCategoryTitle =
-    typeof featured?.category === 'object' && featured.category ? featured.category.title : 'Rubrika'
+  const [articles, categories, mostRead] = await Promise.all([
+    getPublishedArticles(9),
+    getCategories(),
+    getMostReadArticle(),
+  ])
+  const rest = mostRead
+    ? articles.filter((article: any) => article.id !== mostRead.id).slice(0, 6)
+    : articles.slice(0, 6)
+  const mostReadCategoryTitle =
+    typeof mostRead?.category === 'object' && mostRead.category ? mostRead.category.title : 'Rubrika'
 
   return (
     <>
@@ -72,22 +94,22 @@ export default async function HomePage() {
             </p>
           </div>
 
-          {featured ? (
+          {mostRead ? (
             <aside className="hero-card">
               <div className="hero-card__topline">
-                <span>Doporučený článek</span>
-                <time dateTime={featured.publishedAt ?? undefined}>{formatDate(featured.publishedAt)}</time>
+                <span>Nejčtenější článek</span>
+                <time dateTime={mostRead.publishedAt ?? undefined}>{formatDate(mostRead.publishedAt)}</time>
               </div>
 
-              <Link href={`/clanky/${featured.slug}`} className="hero-card__title">
-                {featured.title}
+              <Link href={`/clanky/${mostRead.slug}`} className="hero-card__title">
+                {mostRead.title}
               </Link>
 
-              <p className="hero-card__excerpt">{featured.excerpt}</p>
+              <p className="hero-card__excerpt">{mostRead.excerpt}</p>
 
               <div className="hero-card__footer">
-                <span>{featuredCategoryTitle}</span>
-                <Link href={`/clanky/${featured.slug}`} className="hero-card__link">
+                <span>{mostReadCategoryTitle}</span>
+                <Link href={`/clanky/${mostRead.slug}`} className="hero-card__link">
                   Číst článek →
                 </Link>
               </div>
