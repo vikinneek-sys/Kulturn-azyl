@@ -291,7 +291,7 @@ img {
   display: grid;
   grid-template-columns: minmax(0, 1.05fr) minmax(280px, 0.95fr);
   gap: 2rem;
-  align-items: end;
+  align-items: start;
 }
 
 @media (max-width: 980px) {
