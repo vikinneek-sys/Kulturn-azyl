@@ -6,7 +6,11 @@ export default function KontaktPage() {
           <p className="eyebrow">napiš nám</p>
           <h1>Kontakt</h1>
           <p className="page-intro">
-            Chceš poslat tip na akci, nabídnout text, fotky, rozhovor nebo spolupráci?
+            Chceš nám poradit cool akci? Znáš se s někým cool? JSI TY COOL? Jsme otevření jakému
+            dialogu. Ať už jsi pořadatel, muzikant, malíř, kdokoliv!
+          </p>
+          <p className="page-intro">
+            Chceš se zapojit? Píšeš? Fotíš? CHCEME TĚ! NAPIŠ NÁM! Poznáme se, pokecáme, domluvíme se.
           </p>
         </div>
       </section>
