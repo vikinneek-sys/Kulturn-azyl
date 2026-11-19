@@ -3,7 +3,7 @@ export default function OProjektuPage() {
     <>
       <section className="page-header">
         <div className="container">
-          <p className="eyebrow">manifest bez kravaty</p>
+          <p className="eyebrow">lidé za webem</p>
           <h1>O projektu</h1>
         </div>
       </section>
