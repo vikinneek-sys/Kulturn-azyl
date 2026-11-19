@@ -30,7 +30,6 @@ export const Media: CollectionConfig = {
       name: 'alt',
       type: 'text',
       label: 'Alternativní popis obrázku',
-      required: true,
     },
     {
       name: 'credit',
