@@ -16,7 +16,7 @@ export default async function RedakcePage() {
     <>
       <section className="page-header">
         <div className="container">
-          <p className="eyebrow">lidé za webem</p>
+          <p className="eyebrow">TVŮRCI</p>
           <h1>Redakce</h1>
           <p className="page-intro">
             Naši redakci netvoří žádný profesionální tým. Jsme nadšenci, jsme fanoušci, JSME
