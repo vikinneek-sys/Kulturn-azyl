@@ -1,6 +1,7 @@
 import Link from 'next/link'
 import { AdSlot } from '@/components/AdSlot'
 import { ArticleCard } from '@/components/ArticleCard'
+import { ArticleTags } from '@/components/ArticleTags'
 import { getPayloadClient } from '@/lib/payload'
 
 export const dynamic = 'force-dynamic'
@@ -99,6 +100,7 @@ export default async function HomePage() {
                     />
                   </Link>
                 )}
+                <ArticleTags tags={mostRead.tags} />
                 <Link href={`/clanky/${mostRead.slug}`} className="hero-card__title">
                   {mostRead.title}
                 </Link>
