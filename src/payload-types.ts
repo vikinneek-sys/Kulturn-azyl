@@ -161,7 +161,7 @@ export interface User {
  */
 export interface Media {
   id: number;
-  alt: string;
+  alt?: string | null;
   credit?: string | null;
   updatedAt: string;
   createdAt: string;
@@ -252,6 +252,11 @@ export interface Article {
               | 'rap'
               | 'hiphop'
               | 'reggae'
+              | 'ep'
+              | 'singl'
+              | 'album'
+              | 'turne'
+              | 'koncert'
               | 'malba'
               | 'kresba'
               | 'plastika'
@@ -266,9 +271,6 @@ export interface Article {
               | 'tiskova-zprava'
               | 'rozhovor'
               | 'novinky'
-              | 'album'
-              | 'singl'
-              | 'ep'
               | 'cz-scena'
               | 'zahranicni-scena'
               | 'sk-scena'
@@ -280,6 +282,7 @@ export interface Article {
               | 'tisk'
               | 'vernisaz'
               | 'sport'
+              | 'poznamka'
               | 'ostatni'
             )
           | null;
