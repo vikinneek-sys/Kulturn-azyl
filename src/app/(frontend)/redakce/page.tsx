@@ -19,7 +19,10 @@ export default async function RedakcePage() {
           <p className="eyebrow">lidé za webem</p>
           <h1>Redakce</h1>
           <p className="page-intro">
-            Autoři, fotografové, editoři a další podezřelé kulturní existence.
+            Naši redakci netvoří žádný profesionální tým. Jsme nadšenci, jsme fanoušci, JSME
+            UNDERGROUND. Redakční tým se postupně staví na lidech s nadšením pro umění a pro jiné
+            tvůrčí existence. Přesto stavíme na upřímnosti a důvěře. Žádná slepá doporučení, upřímné
+            raw názory na svět mimo reflektory velkých stagí.
           </p>
         </div>
       </section>
